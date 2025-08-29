@@ -22,7 +22,7 @@ export default function Home() {
 			</section>
 
 			{/* TYPE SELECT */}
-			<section className="section shadow-inner shadow-dark">
+			<section className="section p-5">
 				<div className="w-full p-4 gap-2 grid grid-cols-2 lg:grid-cols-4">
 					<DisplayItem title="NECKLACE" text="Necklaces" />
 					<DisplayItem title="BRACELET" text="Bracelets" />
@@ -33,6 +33,26 @@ export default function Home() {
 				<div className="w-full p-4 gap-2 grid grid-cols-1 lg:grid-cols-2">
 					<DisplayItem title="COLLECTION" text="Shop By Collection" />
 					<DisplayItem title="BEST" text="Shop By Best Sellers" />
+				</div>
+			</section>
+
+			{/* MESSAGE */}
+			<section className="w-full p-5 flex">
+				<div className="relative w-1/3 aspect-square">
+					<Image src={`/MESSAGE.png`} fill className="object-contain"
+						alt="Image representing one of the many link items in the grid" />
+				</div>
+
+				<div className="w-2/3 gap-5 px-10 flex flex-col text-left justify-center">
+					<div className="w-full border-b-2 border-dark">
+						<h1 className="text-2xl text-dark font-title">Discover With Daye</h1>
+					</div>
+					<p className="text-dark font-main">
+						Handcrafted, everyday pieces designed for effortless style. Unique, modern, and made to last — 
+						find jewellery that tells your story. <br/>
+						Ready to elevate your look?
+					</p>
+					<Button text={"SHOP NOW"} />
 				</div>
 			</section>
 		</main>

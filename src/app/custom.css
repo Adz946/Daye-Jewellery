@@ -2,7 +2,7 @@
 @config "../../tailwind.config.js";
 
 /* SCROLLBAR */
-::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
 ::-webkit-scrollbar-thumb {
@@ -15,7 +15,7 @@
 .stacked { @apply grid [grid-template-areas:'stack']; }
 .stacked > * { @apply [grid-area:stack]; }
 
-.section { @apply p-5 gap-5 flex flex-col items-center; }
+.section { @apply gap-5 flex flex-col items-center; }
 
 /* ANIMATE */
 .animate { @apply transform transition-all duration-700 ease-out; }
