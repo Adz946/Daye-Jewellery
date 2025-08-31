@@ -1,5 +1,5 @@
 import { Montserrat, Sofia_Sans } from "next/font/google";
-import "./globals.css";
+import "../styles/globals.css";
 
 const montserrat = Montserrat({
 	variable: "--font-montserrat", subsets: ["latin"]

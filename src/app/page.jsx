@@ -1,5 +1,8 @@
+'use client';
 import Image from "next/image";
 import { Button } from "@/components/Button";
+import { Scroller } from "@/components/Scroller";
+import { ShopItem } from "@/components/ShopItem";
 import { DisplayItem } from "@/components/DisplayItem";
 
 export default function Home() {
@@ -23,14 +26,14 @@ export default function Home() {
 
 			{/* TYPE SELECT */}
 			<section className="section p-5">
-				<div className="w-full p-4 gap-2 grid grid-cols-2 lg:grid-cols-4">
+				<div className="w-full p-4 gap-4 grid grid-cols-2 lg:grid-cols-4">
 					<DisplayItem title="NECKLACE" text="Necklaces" />
 					<DisplayItem title="BRACELET" text="Bracelets" />
 					<DisplayItem title="RING" text="Rings" />
 					<DisplayItem title="EARRING" text="Earrings" />
 				</div>
 
-				<div className="w-full p-4 gap-2 grid grid-cols-1 lg:grid-cols-2">
+				<div className="w-full p-4 gap-8 grid grid-cols-1 lg:grid-cols-2">
 					<DisplayItem title="COLLECTION" text="Shop By Collection" />
 					<DisplayItem title="BEST" text="Shop By Best Sellers" />
 				</div>
@@ -45,7 +48,7 @@ export default function Home() {
 
 				<div className="w-2/3 gap-5 px-10 flex flex-col text-left justify-center">
 					<div className="w-full border-b-2 border-dark">
-						<h1 className="text-2xl text-dark font-title">Discover With Daye</h1>
+						<h2 className="text-2xl text-dark font-title">Discover With Daye</h2>
 					</div>
 					<p className="text-dark font-main">
 						Handcrafted, everyday pieces designed for effortless style. Unique, modern, and made to last — 
@@ -54,6 +57,18 @@ export default function Home() {
 					</p>
 					<Button text={"SHOP NOW"} />
 				</div>
+			</section>
+
+			<section className="section p-5">
+				<Scroller title="Trending Now">
+					<ShopItem desc="Gold Chain Necklace" price="1,249" />
+					<ShopItem desc="Silver Bracelet" price="199" />
+					<ShopItem desc="Diamond Ring" price="2,499" />
+					<ShopItem desc="Pearl Earrings" price="899" />
+					<ShopItem desc="Ruby Pendant" price="1,599" />
+					<ShopItem desc="Emerald Necklace" price="2,299" />
+				</Scroller>
+
 			</section>
 		</main>
     );
