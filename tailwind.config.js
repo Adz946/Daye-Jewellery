@@ -5,7 +5,9 @@ module.exports = {
             white: 'var(--white)',
             black: 'var(--black)',
             dark: 'var(--dark)',
-            light: 'var(--light)'
+            light: 'var(--light)',
+            red: 'var(--red)',
+            green: 'var(--green)'
         },
         extend: {
             fontFamily: { 

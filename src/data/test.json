@@ -1,0 +1,68 @@
+[
+  {
+    "sort": "price_asc",
+    "search": "diamond",
+    "onSale": false,
+    "price": { "min": 0, "max": 500 },
+    "types": ["Ring"],
+    "materialQuery": false,
+    "material": [],
+    "gemQuery": false,
+    "gem": []
+  },
+  {
+    "sort": "",
+    "search": "",
+    "onSale": true,
+    "price": { "min": 100, "max": 1000 },
+    "types": ["Necklace", "Bracelet"],
+    "materialQuery": false,
+    "material": [],
+    "gemQuery": false,
+    "gem": []
+  },
+  {
+    "sort": "price_desc",
+    "search": "",
+    "onSale": false,
+    "price": { "min": 0, "max": 5000 },
+    "types": ["Bracelet"],
+    "materialQuery": true,
+    "material": [{ "type": "Gold", "purity": 58, "color": "Yellow" }],
+    "gemQuery": false,
+    "gem": []
+  },
+  {
+    "sort": "",
+    "search": "vintage",
+    "onSale": false,
+    "price": { "min": 200, "max": 2000 },
+    "types": ["Earring", "Ring"],
+    "materialQuery": false,
+    "material": [],
+    "gemQuery": true,
+    "gem": [{ "types": ["Ruby"], "cut": "Round", "clarity": "AAA" }]
+  },
+  {
+    "sort": "price_asc",
+    "search": "",
+    "onSale": false,
+    "price": { "min": 300, "max": 1500 },
+    "types": ["Ring", "Necklace"],
+    "materialQuery": true,
+    "material": [{ "type": "Silver", "purity": 92, "color": "White" }],
+    "gemQuery": true,
+    "gem": [{ "types": ["Diamond"], "cut": "", "clarity": "VS1" }]
+  },
+  {
+    "sort": "",
+    "search": "tennis",
+    "onSale": true,
+    "price": { "min": 0, "max": 5000 },
+    "types": ["Necklace", "Bracelet", "Ring", "Earring"],
+    "materialQuery": false,
+    "material": [],
+    "gemQuery": false,
+    "gem": []
+  }
+]
