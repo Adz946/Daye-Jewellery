@@ -1,7 +1,6 @@
 import sqlite3 from 'sqlite3';
 import path from 'path';
 
-// Your existing JewelryQueryBuilder class (keep it the same as before)
 class JewelryQueryBuilder {
     constructor() {
         this.viewMap = {
@@ -22,6 +21,62 @@ class JewelryQueryBuilder {
         if (filters.materialQuery) return 'Q2';
         if (filters.gemQuery) return 'Q3';
         return 'Q1';
+    }
+
+    addMaterialGemFilters(whereConditions, params, filters) {
+        // Material filtering
+        if (filters.materialQuery && filters.material && filters.material.length > 0) {
+            const materialConditions = [];
+            
+            filters.material.forEach(material => {
+                // Build exact pattern matching
+                const conditions = [`MaterialData LIKE ?`];
+                let pattern = `%${material.type}|%`; // Match material type
+                
+                if (material.purity && material.color) {
+                    // Both specified: "Gold|58|Yellow"
+                    pattern = `%${material.type}|${material.purity}|${material.color}%`;
+                } else if (material.purity) {
+                    // Only purity: "Gold|58|%"
+                    pattern = `%${material.type}|${material.purity}|%`;
+                } else if (material.color) {
+                    // Only color: "Gold|%|Yellow"
+                    pattern = `%${material.type}|%|${material.color}%`;
+                }
+                // Else: just material type "Gold|%"
+                
+                materialConditions.push(`MaterialData LIKE ?`);
+                params.push(pattern);
+            });
+            
+            if (materialConditions.length > 0) {
+                whereConditions.push(`(${materialConditions.join(' OR ')})`);
+            }
+        }
+
+        // Gem filtering (similar pattern-based approach)
+        if (filters.gemQuery && filters.gem && filters.gem.length > 0) {
+            const gemConditions = [];
+            
+            filters.gem.forEach(gem => {
+                let pattern = `%${gem.type}|%`; // Match gem type
+                
+                if (gem.cut && gem.clarity) {
+                    pattern = `%${gem.type}|${gem.cut}|${gem.clarity}%`;
+                } else if (gem.cut) {
+                    pattern = `%${gem.type}|${gem.cut}|%`;
+                } else if (gem.clarity) {
+                    pattern = `%${gem.type}|%|${gem.clarity}%`;
+                }
+                
+                gemConditions.push(`GemData LIKE ?`);
+                params.push(pattern);
+            });
+            
+            if (gemConditions.length > 0) {
+                whereConditions.push(`(${gemConditions.join(' OR ')})`);
+            }
+        }
     }
 
     buildQuery(filters, limit = 20, offset = 0) {
@@ -58,6 +113,8 @@ class JewelryQueryBuilder {
                 params.push(...typeCodes);
             }
         }
+
+        this.addMaterialGemFilters(whereConditions, params, filters);
 
         if (whereConditions.length > 0) {
             query += ' WHERE ' + whereConditions.join(' AND ');
@@ -100,7 +157,6 @@ function queryDB(sql, params = []) {
     });
 }
 
-// POST endpoint that reads from sessionStorage (sent in request)
 export async function POST(request) {
     try {
         const { filters, page = 0, limit = 20 } = await request.json();
@@ -117,7 +173,7 @@ export async function POST(request) {
             page: page,
             limit: limit,
             resultCount: data.length,
-            hasMore: data.length === limit, // If we got full limit, assume more exist
+            hasMore: data.length === limit,
             results: data
         });
 

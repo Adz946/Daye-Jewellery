@@ -9,7 +9,7 @@
     border-radius: none;
     background-color: var(--black);
 }
-::-webkit-scrollbar-thumb:hover { background: var(--dark); }
+::-webkit-scrollbar-thumb:hover { background: var(--green); }
 
 /* HOME SECTIONS */
 .stacked { @apply grid [grid-template-areas:'stack']; }

@@ -113,17 +113,15 @@ export default function ShopGrid() {
 
     // Load more items
     const loadMore = useCallback(() => {
-        if (!loading && hasMore) {
-            loadItems(page + 1, false);
-        }
+        if (!loading && hasMore) { loadItems(page + 1, false); }
     }, [loading, hasMore, page, loadItems]);
 
     if (!filters) return <div>Loading...</div>;
 
     return (
-        <div className="p-8 max-w-7xl mx-auto">
+        <div className="w-full h-dvh p-8">
             {/* Filter Head */}
-            <div className="w-full mb-4 py-4 gap-6 flex flex-row items-center justify-center">              
+            <div className="w-full h-1/8 mb-4 py-4 gap-6 flex flex-row items-center justify-center">              
                 <div className='w-3/4 p-2 gap-2 flex flex-row items-center border-2 border-dark/50 rounded-lg'>
                     <input type="text" placeholder="Search..." defaultValue={filters?.search || ''}
                         onChange={(e) => filterUpdaters.updateSearch(e.target.value)} className="w-full focus:outline-none" />
@@ -136,10 +134,10 @@ export default function ShopGrid() {
             </div>
 
             {/* Items Grid */}
-            <div className='w-full flex flex-row'>
-                <FilterBar classes="w-1/4 p-4 gap-8" filters={filters} updaters={filterUpdaters} />
+            <div className='w-full h-7/8 flex flex-row'>
+                <FilterBar classes="w-1/4 p-8 gap-4 overflow-y-auto" filters={filters} updaters={filterUpdaters} />
 
-                <div className='w-3/4 p-4'>
+                <div className='w-3/4 p-8 overflow-y-auto'>
                     <div className="w-full gap-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {items.map((item, index) => (
                             <ShopItem key={`${item.JewelleryID}-${index}`} desc={item.Desc} price={item.Price}
