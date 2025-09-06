@@ -122,17 +122,57 @@ class JewelryQueryBuilder {
 
         if (filters.sort) {
             switch (filters.sort) {
+                // Price-based sorting
                 case 'price_asc': query += ' ORDER BY EffectivePrice ASC'; break;
                 case 'price_desc': query += ' ORDER BY EffectivePrice DESC'; break;
+                case 'biggest_discount': query += ' ORDER BY (Price - SalePrice) DESC, EffectivePrice ASC'; break;
+                case 'best_value': query += ' ORDER BY (CASE WHEN SalePrice IS NOT NULL THEN (Price - SalePrice) / Price ELSE 0 END) DESC'; break;
+                
+                // Popularity & Sales-based sorting
+                case 'bestsellers': query += ' ORDER BY AmountSold DESC, DateAdded DESC'; break;
+                case 'trending': query += ' ORDER BY AmountSold DESC, (julianday("now") - julianday(DateAdded)) ASC'; break;
+                case 'popular_in_stock': query += ' ORDER BY AmountSold DESC, InStock DESC'; break;
+                case 'hidden_gems': query += ' ORDER BY AmountSold ASC, EffectivePrice ASC'; break; // Low sales, good price
+                
+                // Date-based sorting  
+                case 'newest_first': query += ' ORDER BY DateAdded DESC'; break;
+                case 'oldest_first': query += ' ORDER BY DateAdded ASC'; break;
+                case 'new_arrivals': query += ' ORDER BY DateAdded DESC, AmountSold DESC'; break;
+                
+                // Availability & Inventory
+                case 'in_stock_first': query += ' ORDER BY (InStock > 0) DESC, InStock DESC, EffectivePrice ASC'; break;
+                case 'low_stock': query += ' ORDER BY InStock ASC, AmountSold DESC'; break;
+                case 'last_chance': query += ' ORDER BY InStock ASC, DateAdded DESC'; break; // Low stock, newer items
+                case 'well_stocked': query += ' ORDER BY InStock DESC, AmountSold ASC'; break;
+                
+                // Sales & Promotions
+                case 'sale_first': query += ' ORDER BY (SalePrice IS NOT NULL) DESC, EffectivePrice ASC'; break;
+                case 'sale_best_deals': query += ' ORDER BY (SalePrice IS NOT NULL) DESC, (Price - SalePrice) DESC'; break;
+                case 'clearance': query += ' ORDER BY (SalePrice IS NOT NULL) DESC, InStock ASC, AmountSold ASC'; break;
+                
+                // Category-specific intelligent sorting
+                case 'rings_popular': query += ' ORDER BY (Type = "R") DESC, AmountSold DESC'; break;
+                case 'engagement_ready': query += ' ORDER BY (Type = "R" AND Desc LIKE "%engagement%") DESC, EffectivePrice DESC'; break;
+                case 'gift_ready': query += ' ORDER BY AmountSold DESC, EffectivePrice ASC'; break;
+                
+                // Advanced combinations
+                case 'smart_featured': query += ' ORDER BY (AmountSold * 0.4 + InStock * 0.3 + (CASE WHEN SalePrice IS NOT NULL THEN 20 ELSE 0 END)) DESC'; break;
+                case 'editor_picks': query += ' ORDER BY (AmountSold BETWEEN 10 AND 50) DESC, EffectivePrice DESC'; break; // Moderate sales, quality items
+                case 'budget_friendly': query += ' ORDER BY EffectivePrice ASC, AmountSold DESC'; break;
+                case 'luxury_items': query += ' ORDER BY EffectivePrice DESC, AmountSold DESC'; break;
+                
+                // Name-based (keep originals)
                 case 'name_asc': query += ' ORDER BY Desc ASC'; break;
                 case 'name_desc': query += ' ORDER BY Desc DESC'; break;
-                case 'sale_first': query += ' ORDER BY (SalePrice IS NOT NULL) DESC, EffectivePrice ASC'; break;
-                case 'in_demand': query += ' ORDER BY InStock ASC, EffectivePrice ASC'; break;
+                
+                // Utility
                 case 'random': query += ' ORDER BY RANDOM()'; break;
-                default: query += ' ORDER BY EffectivePrice ASC';
+                case 'in_demand': query += ' ORDER BY InStock ASC, AmountSold DESC'; break; // Updated logic
+                
+                default: query += ' ORDER BY AmountSold DESC, DateAdded DESC'; // Better default
             }
-        } else {
-            query += ' ORDER BY EffectivePrice ASC';
+        } else { 
+            query += ' ORDER BY AmountSold DESC, DateAdded DESC'; // Better default than price
         }
 
         query += ` LIMIT ${limit} OFFSET ${offset}`;
