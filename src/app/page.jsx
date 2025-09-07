@@ -1,16 +1,22 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/Button";
 import { Scroller } from "@/components/Scroller";
 import { ShopItem } from "@/components/ShopItem";
 import { DisplayItem } from "@/components/DisplayItem";
 import NavbarPrimary from "@/components/nav/NavbarPrimary";
+import TrendingNow from "@/components/TrendingScroller";
 
 export default function Home() {
+    const router = useRouter(); 
+    const toShopNow = () => { router.push('/shop'); };
+
     return (
         <main>
-            {/** NAV */}
+            {/* NAV */}
             <NavbarPrimary />
+            
             {/* HEAD */}
             <section className="stacked h-full text-light font-main">
                 <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
@@ -31,7 +37,7 @@ export default function Home() {
                         <p>NEW ARRIVALS</p>
                         <p>NOW AVAILABLE</p>
                     </div>
-                    <Button text={"SHOP NOW"} />
+                    <Button text={"SHOP NOW"} onClick={toShopNow} />
                 </div>
             </section>
 
@@ -44,9 +50,10 @@ export default function Home() {
                     <DisplayItem title="EARRING" text="Earrings" />
                 </div>
 
-                <div className="w-full p-4 gap-8 grid grid-cols-1 lg:grid-cols-2">
+                <div className="w-full p-4 gap-8 grid grid-cols-1 lg:grid-cols-3">
                     <DisplayItem title="COLLECTION" text="Shop By Collection" />
                     <DisplayItem title="BEST" text="Shop By Best Sellers" />
+                    <DisplayItem title="ITEM" text="Shop By... Other?" />
                 </div>
             </section>
 
@@ -68,25 +75,14 @@ export default function Home() {
                         </h2>
                     </div>
                     <p className="text-dark font-main">
-                        Handcrafted, everyday pieces designed for effortless
-                        style. Unique, modern, and made to last — find jewellery
-                        that tells your story. <br />
-                        Ready to elevate your look?
+                        Handcrafted, everyday pieces designed for effortless style. Unique, modern, and made to last — 
+                        find jewellery that tells your story. <br/><br/> Ready to elevate your look?
                     </p>
-                    <Button text={"SHOP NOW"} />
+                    <Button text={"SHOP NOW"} onClick={toShopNow} />
                 </div>
             </section>
 
-            <section className="section p-5">
-                <Scroller title="Trending Now">
-                    <ShopItem desc="Gold Chain Necklace" price="1,249" />
-                    <ShopItem desc="Silver Bracelet" price="199" />
-                    <ShopItem desc="Diamond Ring" price="2,499" />
-                    <ShopItem desc="Pearl Earrings" price="899" />
-                    <ShopItem desc="Ruby Pendant" price="1,599" />
-                    <ShopItem desc="Emerald Necklace" price="2,299" />
-                </Scroller>
-            </section>
+            <TrendingNow />
         </main>
     );
 }

@@ -1,4 +1,3 @@
-'use client';
 import { useState, useEffect, useCallback } from 'react';
 import FilterStorage from '../utils/FilterStorage';
 import FilterBar from './FilterBar';
@@ -29,7 +28,7 @@ export default function ShopGrid() {
         setLoading(true);
         
         try {
-            const response = await fetch('/api/test-query', {
+            const response = await fetch('/api/item-query', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

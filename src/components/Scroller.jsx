@@ -4,8 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export function Scroller({ title, children }) {
     const [emblaRef, emblaApi] = useEmblaCarousel({ 
-        slidesToScroll: 1,
-        containScroll: 'trimSnaps',
+        slidesToScroll: 1, containScroll: 'trimSnaps',
         breakpoints: {
             '(min-width: 640px)': { slidesToScroll: 1 },
             '(min-width: 1024px)': { slidesToScroll: 1 }

@@ -1,17 +1,7 @@
 "use client";
-
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import {
-    Search,
-    User,
-    Heart,
-    ShoppingCart,
-    ChevronDown,
-    Menu,
-    X,
-    MoreHorizontal,
-} from "lucide-react";
+import { Search, User, Heart, ShoppingCart, ChevronDown, Menu, X, MoreHorizontal } from "lucide-react";
 
 export default function FloatingNav() {
     const [query, setQuery] = useState("");

@@ -7,7 +7,10 @@ module.exports = {
             dark: 'var(--dark)',
             light: 'var(--light)',
             red: 'var(--red)',
-            green: 'var(--green)'
+            green: 'var(--green)',
+            blue: 'var(--blue)',
+            purple: 'var(--purple)',
+            orange: 'var(--orange)'
         },
         extend: {
             fontFamily: { 
