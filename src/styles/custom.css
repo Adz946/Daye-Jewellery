@@ -2,12 +2,12 @@
 @config "../../tailwind.config.js";
 
 /* SCROLLBAR */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--light); }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: none;
-    background-color: var(--black);
+    border-radius: 50px;
+    background-color: var(--dark);
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--green); }
 

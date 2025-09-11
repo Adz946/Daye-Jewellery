@@ -12,7 +12,7 @@ export default function Shop() {
     const handleBackToShop = () => { setSelectedCollection(null); };
 
     return (
-        <main className="px-12 mt-30">
+        <main className="px-12">
             <NavbarPrimary />
             
             <CollectionScroller onCollectionSelect={handleCollectionSelect} 

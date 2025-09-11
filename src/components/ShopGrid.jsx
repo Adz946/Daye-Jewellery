@@ -139,8 +139,8 @@ export default function ShopGrid() {
                 <div className='w-3/4 p-8 overflow-y-auto'>
                     <div className="w-full gap-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {items.map((item, index) => (
-                            <ShopItem key={`${item.JewelleryID}-${index}`} desc={item.Desc} price={item.Price}
-                                salePrice={item.SalePrice} type={item.Type} />
+                            <ShopItem key={`${item.JewelleryID}-${index}`} id={item.JewelleryID} desc={item.Desc} 
+                                price={item.Price} salePrice={item.SalePrice} type={item.Type} sizes={item.Sizes} />
                         ))}
                     </div>
 

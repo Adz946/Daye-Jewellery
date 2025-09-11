@@ -99,10 +99,10 @@ export default function CollectionGrid({ collection, onBack }) {
             {/* Items Grid */}
             <div className="w-full p-8 overflow-y-auto">
                 {loading ? ( <p className="text-center py-8 text-dark">Loading collection items...</p> ) : (
-                    <div className="w-full gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div className="w-full gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                         {items.map((item, index) => (
-                            <ShopItem key={`${item.JewelleryID}-${index}`} desc={item.Desc} price={item.Price}
-                                salePrice={item.CollectionPrice} type={item.Type} />
+                            <ShopItem key={`${item.JewelleryID}-${index}`} id={item.JewelleryID} desc={item.Desc} 
+                                price={item.Price} salePrice={item.CollectionPrice} type={item.Type} sizes={item.Sizes} />
                         ))}
                     </div>
                 )}

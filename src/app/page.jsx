@@ -2,8 +2,6 @@
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/Button";
-import { Scroller } from "@/components/Scroller";
-import { ShopItem } from "@/components/ShopItem";
 import { DisplayItem } from "@/components/DisplayItem";
 import NavbarPrimary from "@/components/nav/NavbarPrimary";
 import TrendingNow from "@/components/TrendingScroller";

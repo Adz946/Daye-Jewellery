@@ -1,6 +1,8 @@
 import { Montserrat, Sofia_Sans } from "next/font/google";
 import "../styles/globals.css";
 
+import { CartProvider } from "@/contexts/CartContext";
+
 const montserrat = Montserrat({
 	variable: "--font-montserrat", subsets: ["latin"]
 });
@@ -18,7 +20,9 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={`${montserrat.variable} ${sofiaSans.variable} antialiased`}>
-				{children}
+				<CartProvider>
+					{children}
+				</CartProvider>
 			</body>
 		</html>
 	);
