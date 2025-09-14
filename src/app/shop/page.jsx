@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import NavbarPrimary from "@/components/nav/NavbarPrimary";
 
 import ShopGrid from "@/components/ShopGrid";
 import CollectionGrid from '@/components/CollectionGrid';
@@ -12,15 +11,15 @@ export default function Shop() {
     const handleBackToShop = () => { setSelectedCollection(null); };
 
     return (
-        <main className="px-12">
-            <NavbarPrimary />
-            
-            <CollectionScroller onCollectionSelect={handleCollectionSelect} 
+        <main>
+            <section className='px-12'>
+                <CollectionScroller onCollectionSelect={handleCollectionSelect} 
                 selectedCollectionId={selectedCollection?.CollectionID} />
 
-            {selectedCollection ? 
-                ( <CollectionGrid collection={selectedCollection} onBack={handleBackToShop} /> ) 
-                : ( <ShopGrid /> )}
+                {selectedCollection ? 
+                    ( <CollectionGrid collection={selectedCollection} onBack={handleBackToShop} /> ) 
+                    : ( <ShopGrid /> )}
+            </section>
         </main>
     );
 }

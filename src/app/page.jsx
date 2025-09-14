@@ -3,8 +3,7 @@ import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/Button";
 import { DisplayItem } from "@/components/DisplayItem";
-import NavbarPrimary from "@/components/nav/NavbarPrimary";
-import TrendingNow from "@/components/TrendingScroller";
+import { SelectionScroller } from "@/components/home/selectionScroller";
 
 export default function Home() {
     const router = useRouter(); 
@@ -12,9 +11,6 @@ export default function Home() {
 
     return (
         <main>
-            {/* NAV */}
-            <NavbarPrimary />
-            
             {/* HEAD */}
             <section className="stacked h-full text-light font-main">
                 <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
@@ -80,7 +76,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <TrendingNow />
+            <SelectionScroller title="BEST SELLERS" />
         </main>
     );
 }

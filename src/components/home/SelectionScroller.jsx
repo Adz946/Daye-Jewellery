@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Scroller } from "@/components/Scroller";
 import { ShopItem } from "@/components/ShopItem";
 
-export default function TrendingNow() {
+export function SelectionScroller({ title }) {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -22,7 +22,7 @@ export default function TrendingNow() {
                 setItems(data.results); 
             }
         } catch (error) {
-            console.error('Failed to load best sellers:', error);
+            console.error('Failed to load selection list:', error);
         } finally {
             setLoading(false);
         }
@@ -32,11 +32,11 @@ export default function TrendingNow() {
 
     return (
         <section className="section p-12">
-            <Scroller title="Trending Now">
-                {loading ? ( <p>Loading trending items...</p> ) : (
+            <Scroller title={title}>
+                {loading ? ( <p>Loading selection list...</p> ) : (
                     items.map((item, index) => (
-                        <ShopItem key={`${item.JewelleryID}-${index}`} desc={item.Desc} price={item.Price}
-                            salePrice={item.SalePrice} type={item.Type} />
+                        <ShopItem key={`${item.JewelleryID}-${index}`} id={item.JewelleryID} desc={item.Desc} 
+                            price={item.Price} salePrice={item.SalePrice} type={item.Type} sizes={item.Sizes} />
                     ))
                 )}
             </Scroller>

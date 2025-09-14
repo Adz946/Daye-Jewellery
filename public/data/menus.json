@@ -1,0 +1,178 @@
+{
+  "mainNavigation": [
+    {
+      "id": "collections",
+      "title": "Our Collections", 
+      "link": "#",
+      "hasSubmenu": true,
+      "submenu": [
+        {
+          "id": "minimalist",
+          "title": "Minimalist",
+          "description": "Clean, simple designs for everyday wear",
+          "link": "#"
+        },
+        {
+          "id": "statement", 
+          "title": "Statement Pieces",
+          "description": "Bold jewelry to make an impression",
+          "link": "#"
+        },
+        {
+          "id": "vintage-inspired",
+          "title": "Vintage Inspired", 
+          "description": "Timeless designs with modern craftsmanship",
+          "link": "#"
+        },
+        {
+          "id": "layering",
+          "title": "Layering Essentials",
+          "description": "Perfect pieces for mixing and matching", 
+          "link": "#"
+        },
+        {
+          "id": "bridal",
+          "title": "Bridal Collection",
+          "description": "Special pieces for your perfect day",
+          "link": "#"
+        },
+        {
+          "id": "gift-sets",
+          "title": "Gift Sets",
+          "description": "Curated jewelry bundles",
+          "link": "#"
+        }
+      ]
+    },
+    {
+      "id": "best-sellers",
+      "title": "Best Sellers",
+      "link": "#", 
+      "hasSubmenu": true,
+      "submenu": [
+        {
+          "id": "top-necklaces",
+          "title": "Top Necklaces",
+          "description": "Our most loved necklace designs",
+          "link": "#"
+        },
+        {
+          "id": "popular-rings", 
+          "title": "Popular Rings",
+          "description": "Customer favorite rings",
+          "link": "#"
+        },
+        {
+          "id": "trending-earrings",
+          "title": "Trending Earrings", 
+          "description": "Earrings everyone's talking about",
+          "link": "#"
+        },
+        {
+          "id": "bestseller-bracelets",
+          "title": "Bestseller Bracelets",
+          "description": "Most purchased bracelet styles",
+          "link": "#"
+        },
+        {
+          "id": "customer-favorites",
+          "title": "Customer Favorites",
+          "description": "Highest rated pieces", 
+          "link": "#"
+        },
+        {
+          "id": "most-gifted",
+          "title": "Most Gifted",
+          "description": "Perfect for giving to someone special",
+          "link": "#"
+        }
+      ]
+    },
+    {
+      "id": "all-jewellery", 
+      "title": "All Jewellery",
+      "link": "#",
+      "hasSubmenu": true,
+      "submenu": [
+        {
+          "id": "necklaces",
+          "title": "Necklaces",
+          "description": "Chains, pendants, and chokers",
+          "link": "#"
+        },
+        {
+          "id": "rings",
+          "title": "Rings", 
+          "description": "Statement rings, bands, and stacking rings",
+          "link": "#"
+        },
+        {
+          "id": "earrings",
+          "title": "Earrings",
+          "description": "Studs, hoops, drops, and climbers", 
+          "link": "#"
+        },
+        {
+          "id": "bracelets",
+          "title": "Bracelets",
+          "description": "Chains, cuffs, and charm bracelets",
+          "link": "#"
+        },
+        {
+          "id": "body-jewelry",
+          "title": "Body Jewelry",
+          "description": "Unique pieces for creative styling",
+          "link": "#"
+        }
+      ]
+    },
+    {
+      "id": "on-sale",
+      "title": "On Sale",
+      "link": "#",
+      "hasSubmenu": false
+    }
+  ],
+  "mobileQuickLinks": [
+    {
+      "id": "new-arrivals",
+      "title": "New Arrivals", 
+      "link": "#"
+    },
+    {
+      "id": "under-50",
+      "title": "Under $50",
+      "link": "#"
+    },
+    {
+      "id": "care-guide", 
+      "title": "Care Guide",
+      "link": "#"
+    },
+    {
+      "id": "size-guide",
+      "title": "Size Guide", 
+      "link": "#"
+    }
+  ],
+  "userActions": [
+    {
+      "id": "account",
+      "title": "My Account",
+      "link": "#",
+      "icon": "user"
+    },
+    {
+      "id": "wishlist", 
+      "title": "Wishlist",
+      "link": "#",
+      "icon": "heart"
+    },
+    {
+      "id": "orders",
+      "title": "Order History",
+      "link": "#", 
+      "icon": "package"
+    }
+  ]
+}
