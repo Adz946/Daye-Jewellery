@@ -15,7 +15,9 @@ export function DisplayItem({ title, text }) {
                 />
             </div>
 
-            <p className="w-full py-2 font-main font-bold">{text}</p>
+            <p className="w-full py-2 font-main font-bold text-sm sm:text-base">
+                {text}
+            </p>
         </div>
     );
 }
