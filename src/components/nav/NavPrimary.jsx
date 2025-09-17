@@ -3,10 +3,11 @@ import { useState } from "react";
 import { Heart, Search, User, ChevronDown } from "lucide-react";
 
 import { NavLink } from "./NavLink";
-import { CartIcon } from "./CartIcon";
+import { CartIcon } from "./cart/CartIcon";
 import { MenuDropdown } from "./MenuDropdown";
 import { MenuItem } from "./MenuItem";
 import { useMenu } from "@/hooks/useMenu";
+import { WishlistIcon } from "./wishlist/WishlistIcon";
 
 export default function NavPrimary() {
     const [query, setQuery] = useState("");
@@ -62,7 +63,7 @@ export default function NavPrimary() {
 
                 <div className="hidden xl:flex gap-8 items-center">
                     <NavLink link="#"> <User size={24} className="animate hover:text-blue" /> </NavLink>
-                    <NavLink link="#"> <Heart size={24} className="animate hover:text-blue" /> </NavLink>
+                    <WishlistIcon />
                     <CartIcon />
 
                     <NavLink link="#" classes="flex items-center gap-1">

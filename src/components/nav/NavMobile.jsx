@@ -1,9 +1,10 @@
 // NavMobile.jsx - Simplified with components
 import { useState } from "react";
-import { CartIcon } from "./CartIcon";
 import { ChevronDown, Menu, User, Heart, X } from "lucide-react";
 
 import { NavLink } from "./NavLink";
+import { CartIcon } from "./cart/CartIcon";
+import { WishlistIcon } from "./wishlist/WishlistIcon";
 import { useMenu } from "@/hooks/useMenu";
 import { ContentSwitcher } from "./ContentSwitcher";
 
@@ -60,9 +61,13 @@ export default function NavMobile() {
                             <NavLink link="#"> 
                                 <User size={28} /> 
                             </NavLink>
-                            <NavLink link="#"> 
-                                <Heart size={28} /> 
-                            </NavLink>
+
+                            <WishlistIcon 
+                                size={28} 
+                                onClick={() => setContent("wishlist")}
+                                classes={content === "wishlist" ? "text-blue" : ""} 
+                            />
+
                             <CartIcon 
                                 size={28} 
                                 onClick={() => setContent("cart")}

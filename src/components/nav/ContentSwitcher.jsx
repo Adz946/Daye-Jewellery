@@ -1,6 +1,7 @@
 import { MenuList } from "./MenuList";
 import { SubMenuContent } from "./SubMenuContent";
-import { CartContent } from "./CartContent";
+import { CartContent } from "./cart/CartContent";
+import { WishlistContent } from "./wishlist/WishlistContent";
 
 export function ContentSwitcher({ content, menuData, currentSubmenu, onContentChange, onSubmenuSelect }) {
     const handleMenuClick = (menuItem) => {
@@ -15,6 +16,8 @@ export function ContentSwitcher({ content, menuData, currentSubmenu, onContentCh
             );
         case "cart": 
             return <CartContent />;
+        case "wishlist":
+            return <WishlistContent />;
         default:
             if (content.startsWith('submenu-')) {
                 return (

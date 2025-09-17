@@ -1,14 +1,11 @@
+import { memo } from "react";
 import { ShoppingBag } from "lucide-react";
 import { CartItem } from "./CartItem";
-import { Button } from "../Button";
+import { Button } from "@/components/Button";
 import { useCart } from '@/contexts/CartContext';
 
-export function CartContent({ showTitle = false, className = "" }) {
-    const { cart, removeFromCart, getCartCount } = useCart();
-    
-    const totalPrice = cart.reduce((total, cartItem) => {
-        return total + (cartItem.price * cartItem.quantity);
-    }, 0);
+export const CartContent = memo(function CartContent({ showTitle = false, className = "" }) {
+    const { cart, removeFromCart, cartCount, cartTotal, updateQuantity } = useCart();
 
     if (cart.length === 0) {
         return (
@@ -23,23 +20,27 @@ export function CartContent({ showTitle = false, className = "" }) {
         <div className={`flex flex-col h-full ${className}`}>
             {showTitle && (
                 <div className="pb-4 border-b border-dark/10">
-                    <h2 className="text-xl font-semibold">Shopping Cart ({getCartCount()})</h2>
+                    <h2 className="text-xl font-semibold">Shopping Cart ({cartCount})</h2>
                 </div>
             )}
             
             <div className="flex-1 overflow-y-auto py-2">
                 {cart.map((cartItem, index) => (
-                    <CartItem key={`${cartItem.itemId}-${cartItem.size}-${index}`} item={cartItem}
-                        onClick={() => removeFromCart(cartItem.itemId, cartItem.size)} />
+                    <CartItem 
+                        key={`${cartItem.itemId}-${cartItem.size}-${index}`} 
+                        item={cartItem}
+                        onRemove={() => removeFromCart(cartItem.itemId, cartItem.size)}
+                        onUpdateQuantity={(newQuantity) => updateQuantity(cartItem.itemId, cartItem.size, newQuantity)}
+                    />
                 ))}
             </div>
             
             <div className="pt-4 space-y-4">
                 <p className="text-center">
-                    Total: <span className="font-semibold">${totalPrice.toFixed(2)}</span>
+                    Total: <span className="font-semibold">${cartTotal.toFixed(2)}</span>
                 </p>
                 <Button text="Checkout" className="w-full" />
             </div>
         </div>
     );
-}
+});

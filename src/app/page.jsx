@@ -14,24 +14,18 @@ export default function Home() {
             {/* HEAD */}
             <section className="stacked h-full text-light font-main">
                 <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
-                    <video
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover object-center"
-                    >
+                    <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover object-center">
                         <source src="/HERO.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>
 
                 <div className="w-full h-full z-50 gap-5 p-15 bg-black/20 flex flex-col text-center items-center justify-end">
-                    <div className="flex flex-col gap-2 text-2xl font-bold">
-                        <p>NEW ARRIVALS</p>
-                        <p>NOW AVAILABLE</p>
+                    <div className="flex flex-col gap-2 font-bold">
+                        <p className="text-xl">NEW ARRIVALS</p>
+                        <p className="text-2xl">NOW AVAILABLE</p>
                     </div>
-                    <Button text={"SHOP NOW"} onClick={toShopNow} />
+                    <Button wd="lg:w-1/3" text={"SHOP NOW"} onClick={toShopNow} />
                 </div>
             </section>
 
@@ -72,7 +66,7 @@ export default function Home() {
                         Handcrafted, everyday pieces designed for effortless style. Unique, modern, and made to last — 
                         find jewellery that tells your story. <br/><br/> Ready to elevate your look?
                     </p>
-                    <Button text={"SHOP NOW"} onClick={toShopNow} />
+                    <Button wd="lg:w-1/3" text={"SHOP NOW"} onClick={toShopNow} />
                 </div>
             </section>
 
