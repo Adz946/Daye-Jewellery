@@ -1,15 +1,21 @@
 import Image from "next/image";
 
-export function DisplayItem({title, text}) {
+export function DisplayItem({ title, text }) {
     return (
-        <div className="flex flex-col text-center bg-light text-dark animate 
-            hover:bg-dark hover:text-light hover:font-bold hover:scale-95">
-            <div className="relative w-full aspect-square bg-white shadow-inner-custom">
-                <Image src={`/${title}_PLACEHOLDER.png`} fill className="object-contain"
-                    alt="Image representing one of the many link items in the grid" />
+        <div
+            className="flex flex-col text-center text-dark 
+            hover:outline hover:outline-black/70 rounded-xl"
+        >
+            <div className="relative w-full aspect-square ">
+                <Image
+                    src={`/${title}_PLACEHOLDER.png`}
+                    fill
+                    className="object-contain rounded-xl"
+                    alt="Image representing one of the many link items in the grid"
+                />
             </div>
-                
-            <p className="w-full py-2 font-main">{text}</p>
+
+            <p className="w-full py-2 font-main font-bold">{text}</p>
         </div>
     );
 }
