@@ -18,23 +18,21 @@ export default function Home() {
             {/* NAV */}
             <NavbarPrimary />
 
-            {/* HEAD */}
-            <section className="stacked h-full text-light font-main">
-                <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
-                    <video
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover object-center"
-                    >
-                        <source src="/HERO.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
+            {/** HERO */}
+            <section className="relative h-[90vh] md:h-screen text-light font-main overflow-hidden">
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover z-[-1]"
+                >
+                    <source src="/HERO.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
 
-                <div className="w-full h-full z-50 gap-5 p-15 bg-black/20 flex flex-col text-center items-center justify-end">
-                    <div className="flex flex-col gap-2 text-2xl font-bold">
+                <div className="w-full h-full z-10 p-5 sm:p-15 bg-black/20 flex flex-col text-center items-center justify-end">
+                    <div className="flex flex-col gap-2 text-base sm:text-base md:text-2xl font-bold mb-4">
                         <p>NEW ARRIVALS</p>
                         <p>NOW AVAILABLE</p>
                     </div>
@@ -43,7 +41,7 @@ export default function Home() {
             </section>
 
             {/* TYPE SELECT */}
-            <section className="w-full p-4 md:p-6 flex flex-col gap-4 md:gap-8">
+            <section className="w-full p-4 lg:p-12 md:p-6 flex flex-col gap-4 md:gap-8">
                 <div className="w-full gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
                     <DisplayItem title="NECKLACE" text="Necklaces" />
                     <DisplayItem title="BRACELET" text="Bracelets" />
@@ -58,7 +56,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="w-full p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 md:gap-8">
+            <section className="w-full p-4 lg:p-12 md:p-6 flex flex-col md:flex-row items-center gap-6 md:gap-8">
                 <div className="relative w-full md:w-1/3 aspect-square">
                     <Image
                         src={`/MESSAGE.png`}
