@@ -17,7 +17,13 @@ export default function Home() {
             {/* HEAD */}
             <section className="stacked h-full text-light font-main">
                 <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
-                    <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover object-center">
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover object-center"
+                    >
                         <source src="/HERO.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
@@ -28,7 +34,11 @@ export default function Home() {
                         <p className="text-xl">NEW ARRIVALS</p>
                         <p className="text-2xl">NOW AVAILABLE</p>
                     </div>
-                    <Button wd="lg:w-1/3" text={"SHOP NOW"} onClick={toShopNow} />
+                    <Button
+                        wd="lg:w-1/3"
+                        text={"SHOP NOW"}
+                        onClick={toShopNow}
+                    />
                 </div>
             </section>
 
@@ -72,11 +82,26 @@ export default function Home() {
                         <br />
                         Ready to elevate your look?
                     </p>
-                    <Button wd="lg:w-1/3" text={"SHOP NOW"} onClick={toShopNow} />
+                    <Button
+                        wd="lg:w-1/3"
+                        text={"SHOP NOW"}
+                        onClick={toShopNow}
+                    />
                 </div>
             </section>
 
             <SelectionScroller title="BEST SELLERS" />
+
+            <section className="">
+                <div className="relative aspect-[12/10] w-full md:aspect-auto md:h-screen">
+                    <img
+                        src="/UNIQUE_PLACEHOLDER.png"
+                        className="absolute h-full"
+                        alt=""
+                    />
+                </div>
+            </section>
+
             <Reviews />
         </main>
     );
