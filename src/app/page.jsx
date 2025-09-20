@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
 import { useFilters } from "@/contexts/FilterContext";
 import { DisplayItem } from "@/components/DisplayItem";
-import { SelectionScroller } from "@/components/home/selectionScroller";
+import { SelectionScroller } from "@/components/home/SelectionScroller";
 import Reviews from "@/components/home/Reviews";
 
 export default function Home() {

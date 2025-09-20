@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeft, Heart, ShoppingBag } from 'lucide-react';
 import { ShopItem } from './ShopItem';
-import { Button } from './Button';
 
 export default function CollectionGrid({ collection, onBack }) {
     const [items, setItems] = useState([]);
