@@ -1,26 +1,26 @@
-@import '../styles/custom.css';
+@import "../styles/custom.css";
 
 :root {
-  --white: #FFF;
-  --black: #000;
-  --dark: #1E1E1E;
-  --light: #E1E1E1;
+    --white: #fff;
+    --black: #000;
+    --dark: #1e1e1e;
+    --light: #e1e1e1;
 
-  --red: #BE0000;
-  --green: #00BE29;
+    --red: #be0000;
+    --green: #00be29;
 
-  --blue: #0055EE;
-  --purple: #6611DD;
-  --orange: #DD3311;
+    --blue: #0055ee;
+    --purple: #6611dd;
+    --orange: #dd3311;
 }
 
 @theme inline {
-  --font-main: var(--font-montserrat);
-  --font-title: var(--font-sofia-sans);
+    --font-main: var(--font-montserrat);
+    --font-title: var(--font-sofia-sans);
 }
 
 body {
-  background: var(--white);
-  color: var(--dark);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--white);
+    color: var(--dark);
+    font-family: Arial, Helvetica, sans-serif;
 }

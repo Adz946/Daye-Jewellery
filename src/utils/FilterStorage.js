@@ -14,23 +14,37 @@ class FilterStorage {
         };
     }
 
+    // Helper to check if we're on client side
+    isClient() {
+        return typeof window !== 'undefined';
+    }
+
     // Get current filters from sessionStorage
     getFilters() {
-        if (typeof window === 'undefined') return this.defaultFilters;
+        if (!this.isClient()) return this.defaultFilters;
         
-        const stored = sessionStorage.getItem(this.storageKey);
-        return stored ? JSON.parse(stored) : this.defaultFilters;
+        try {
+            const stored = sessionStorage.getItem(this.storageKey);
+            return stored ? JSON.parse(stored) : this.defaultFilters;
+        } catch (error) {
+            console.warn('Failed to get filters from sessionStorage:', error);
+            return this.defaultFilters;
+        }
     }
 
     // Save filters to sessionStorage
     saveFilters(filters) {
-        if (typeof window === 'undefined') return;
+        if (!this.isClient()) return;
         
-        // Update query flags automatically
-        filters.materialQuery = filters.material && filters.material.length > 0;
-        filters.gemQuery = filters.gem && filters.gem.length > 0;
-        
-        sessionStorage.setItem(this.storageKey, JSON.stringify(filters));
+        try {
+            // Update query flags automatically
+            filters.materialQuery = filters.material && filters.material.length > 0;
+            filters.gemQuery = filters.gem && filters.gem.length > 0;
+            
+            sessionStorage.setItem(this.storageKey, JSON.stringify(filters));
+        } catch (error) {
+            console.warn('Failed to save filters to sessionStorage:', error);
+        }
     }
 
     // Update specific filter and save
@@ -43,8 +57,14 @@ class FilterStorage {
 
     // Reset to defaults
     resetFilters() {
-        this.saveFilters({ ...this.defaultFilters });
-        return this.defaultFilters;
+        if (this.isClient()) {
+            try {
+                sessionStorage.removeItem(this.storageKey);
+            } catch (error) {
+                console.warn('Failed to clear filters from sessionStorage:', error);
+            }
+        }
+        return { ...this.defaultFilters };
     }
 }
 

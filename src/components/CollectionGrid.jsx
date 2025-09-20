@@ -31,60 +31,64 @@ export default function CollectionGrid({ collection, onBack }) {
     useEffect(() => { loadCollectionItems(); }, [collection]);
 
     const handleGetAll = () => {
-        // Add all items to cart logic here
         console.log('Add all items to cart');
     };
 
     const handleFavoriteAll = () => {
-        // Add all items to favorites logic here  
         console.log('Add all items to favorites');
     };
 
     if (!collection) return null;
 
     return (
-        <div className="w-full h-dvh p-8">
-            {/* Breadcrumbs & Back Button */}
-            <div className="w-full mb-6 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                    <button onClick={onBack} className="flex items-center gap-2 text-dark hover:text-dark/70">
-                        <ArrowLeft size={20} />
+        <div className="w-full h-dvh p-4">
+            <div className="w-full mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                
+                {/* Breadcrumbs & Back Button */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <button onClick={onBack} className="flex items-center gap-2 text-dark hover:text-dark/70 
+                        text-sm sm:text-base">
+                        <ArrowLeft size={18} className="sm:w-5 sm:h-5" />
                         <span>Back to Shop</span>
                     </button>
-                    <div className="text-dark/60">
+                    <div className="text-dark/60 text-xs sm:text-sm">
                         Collections / <span className="text-dark font-semibold">{collection.Name}</span>
                     </div>
                 </div>
 
-                {/* Collection Actions */}
-                <div className="flex items-center gap-4">
-                    <button onClick={handleGetAll} className="flex items-center gap-2 p-2 border-2 border-dark rounded-lg 
-                        animate hover:bg-dark hover:text-light">
-                        <ShoppingBag size={20} />
+                {/* Collection Actions - Mobile Responsive */}
+                <div className="flex flex-row sm:flex-row items-center gap-2 sm:gap-4 w-full sm:w-auto">
+                    <button onClick={handleGetAll} className="flex-1 sm:flex-none flex items-center justify-center 
+                        gap-2 p-2 sm:p-3 border-2 border-dark rounded-lg text-sm sm:text-base
+                        animate hover:bg-dark hover:text-light min-h-[44px]">
+                        <ShoppingBag size={18} className="sm:w-5 sm:h-5" />
                         <span>Bag All</span>
                     </button>
 
-                    <button onClick={handleFavoriteAll} className="flex items-center gap-2 p-2 border-2 border-dark rounded-lg 
-                        animate hover:bg-dark hover:text-light">
-                        <Heart size={20} />
+                    <button onClick={handleFavoriteAll} className="flex-1 sm:flex-none flex items-center justify-center 
+                        gap-2 p-2 sm:p-3 border-2 border-dark rounded-lg text-sm sm:text-base
+                        animate hover:bg-dark hover:text-light min-h-[44px]">
+                        <Heart size={18} className="sm:w-5 sm:h-5" />
                         <span>Favorite All</span>
                     </button>
                 </div>
             </div>
 
-            {/* Collection Info */}
-            <div className="w-full pl-4 py-4 bg-white border-b-2 border-dark/50">
-                <div className="flex items-center justify-between">
+            {/* Mobile-Optimized Collection Info */}
+            <div className="w-full p-4 mb-8">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div>
                         <h1 className="text-3xl font-bold">{collection.Name}</h1>
-                        <p className="pl-2 text-sm text-dark/70">{collection.Type} | {collection.ItemCount} items</p>
+                        <p className="text-sm text-dark/70"> {collection.Type} | {collection.ItemCount} items </p>
                         
                         {collection.CollectionPrice && (
-                            <p className="pl-2 pt-2 font-semibold text-dark">Collection Price: ${collection.CollectionPrice}</p>
+                            <p className="text-lg font-semibold text-dark pt-1">
+                                Collection Price: ${collection.CollectionPrice}
+                            </p>
                         )}
 
                         {collection.DiscountType && (
-                            <p className="pl-2 text-sm text-dark">
+                            <p className="text-sm text-green-600 font-medium">
                                 {collection.DiscountType === 'PERCENTAGE' && `${collection.DiscountAmount}% off individual items`}
                                 {collection.DiscountType === 'GET-FREE' && `Buy items, get ${collection.DiscountAmount} free`}
                                 {collection.DiscountType === 'GET-HALF' && `Buy items, get ${collection.DiscountAmount} half off`}
@@ -96,13 +100,24 @@ export default function CollectionGrid({ collection, onBack }) {
                 </div>
             </div>
 
-            {/* Items Grid */}
-            <div className="w-full p-8 overflow-y-auto">
-                {loading ? ( <p className="text-center py-8 text-dark">Loading collection items...</p> ) : (
-                    <div className="w-full gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {/* Mobile-Optimized Items Grid */}
+            <div className="w-full flex-1 overflow-y-auto">
+                {loading ? ( 
+                    <p className="text-center py-8 text-dark">Loading collection items...</p> 
+                ) : (
+                    <div className="w-full gap-4 sm:gap-6 lg:gap-8 xl:gap-10 
+                        grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 
+                        lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                         {items.map((item, index) => (
-                            <ShopItem key={`${item.JewelleryID}-${index}`} id={item.JewelleryID} desc={item.Desc} 
-                                price={item.Price} salePrice={item.CollectionPrice} type={item.Type} sizes={item.Sizes} />
+                            <ShopItem 
+                                key={`${item.JewelleryID}-${index}`} 
+                                id={item.JewelleryID} 
+                                desc={item.Desc} 
+                                price={item.Price} 
+                                salePrice={item.CollectionPrice} 
+                                type={item.Type} 
+                                sizes={item.Sizes} 
+                            />
                         ))}
                     </div>
                 )}
