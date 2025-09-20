@@ -3,9 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
 import { DisplayItem } from "@/components/DisplayItem";
-import NavbarPrimary from "@/components/nav/NavbarPrimary";
-import TrendingNow from "@/components/TrendingScroller";
-import Reviews from "@/components/Reviews";
+import { SelectionScroller } from "@/components/home/selectionScroller";
 
 export default function Home() {
     const router = useRouter();
@@ -15,28 +13,25 @@ export default function Home() {
 
     return (
         <main>
-            {/* NAV */}
-            <NavbarPrimary />
-
-            {/** HERO */}
-            <section className="relative h-[90vh] md:h-screen text-light font-main overflow-hidden">
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover z-[-1]"
-                >
-                    <source src="/HERO.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
+            {/* HEAD */}
+            <section className="stacked h-full text-light font-main">
+                <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
+                    <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover object-center">
+                        <source src="/HERO.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
 
                 <div className="w-full h-full z-10 p-5 sm:p-15 bg-black/20 flex flex-col text-center items-center justify-end">
                     <div className="flex flex-col gap-2 text-base sm:text-base md:text-2xl font-bold mb-4">
                         <p>NEW ARRIVALS</p>
                         <p>NOW AVAILABLE</p>
+                <div className="w-full h-full z-50 gap-5 p-15 bg-black/20 flex flex-col text-center items-center justify-end">
+                    <div className="flex flex-col gap-2 font-bold">
+                        <p className="text-xl">NEW ARRIVALS</p>
+                        <p className="text-2xl">NOW AVAILABLE</p>
                     </div>
-                    <Button text={"SHOP NOW"} onClick={toShopNow} />
+                    <Button wd="lg:w-1/3" text={"SHOP NOW"} onClick={toShopNow} />
                 </div>
             </section>
 
@@ -80,13 +75,11 @@ export default function Home() {
                         <br />
                         Ready to elevate your look?
                     </p>
-                    <Button text={"SHOP NOW"} onClick={toShopNow} />
+                    <Button wd="lg:w-1/3" text={"SHOP NOW"} onClick={toShopNow} />
                 </div>
             </section>
 
-            <TrendingNow />
-
-            <Reviews />
+            <SelectionScroller title="BEST SELLERS" />
         </main>
     );
 }

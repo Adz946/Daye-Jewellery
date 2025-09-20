@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Image from "next/image";
 import { ItemModal } from './ItemModal';
 import { Heart, ShoppingBag } from 'lucide-react';
+import { useWishlist } from '@/contexts/WishlistContext';
 
 function getImg(type) {
     switch(type) {
@@ -16,11 +17,25 @@ function getImg(type) {
 
 export function ShopItem({ id, desc, price, salePrice = null, type = "", sizes = "" }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+    
     const isOnSale = salePrice !== null && salePrice !== undefined;
+    const isWishlisted = isInWishlist(id);
+    const displayPrice = isOnSale ? salePrice : price;
 
     const handleAddToCartClick = (e) => {
         e.stopPropagation();
         setIsModalOpen(true);
+    };
+
+    const handleWishlistClick = (e) => {
+        e.stopPropagation();
+        
+        if (isWishlisted) {
+            removeFromWishlist(id);
+        } else {
+            addToWishlist(id, desc, displayPrice);
+        }
     };
 
     const itemData = { id, desc, price, salePrice, type, sizes };
@@ -37,9 +52,20 @@ export function ShopItem({ id, desc, price, salePrice = null, type = "", sizes =
                         alt={`${desc} - ${getImg(type).toLowerCase()}`}
                     />
 
-                    <div className="p-5 absolute top-0 right-0">
-                        <Heart size={24} className="text-dark hover:fill-dark transition-colors" />
-                    </div>
+                    <button
+                        onClick={handleWishlistClick}
+                        className="p-3 absolute top-2 right-2 hover:scale-110 animate rounded-full"
+                        aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                    >
+                        <Heart 
+                            size={24} 
+                            className={`transition-colors ${
+                                isWishlisted 
+                                    ? "text-red fill-red" 
+                                    : "text-dark hover:text-red hover:fill-red/20"
+                            }`}
+                        />
+                    </button>
                 </div>
                     
                 <div className="w-full h-30 flex text-center items-center justify-center">
