@@ -47,6 +47,7 @@ export default function NavMobile() {
                                 currentSubmenu={currentSubmenu}
                                 onContentChange={setContent}
                                 onSubmenuSelect={setCurrentSubmenu}
+                                onMenuClose={() => setIsOpen(false)}
                             />
                         </div>
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import FilterStorage from '../utils/FilterStorage';
+import { useFilters } from '@/contexts/FilterContext';
 import FilterBar from './FilterBar';
 import { ShopItem } from './ShopItem';
 import { Toggle } from './filter/Toggle';
@@ -11,21 +11,17 @@ export default function ShopGrid() {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);    
-    const [filters, setFilters] = useState(null);
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
     
-    const filterStorage = new FilterStorage();
+    const { filters, filterUpdaters, isHydrated } = useFilters();
     const itemsPerPage = 20;
 
-    // Load initial filters
-    useEffect(() => {
-        const initialFilters = filterStorage.getFilters();
-        setFilters(initialFilters);
-    }, []);
-
-    // Load items from API
-    const loadItems = useCallback(async (currentPage = 0, clearGrid = false) => {
-        if (loading || !filters) return;      
+    const loadItems = useCallback(async (currentPage = 0, clearGrid = false, filtersToUse = null) => {
+        if (loading) return;
+        
+        const activeFilters = filtersToUse || filters;
+        if (!activeFilters) return;
+        
         setLoading(true);
         
         try {
@@ -33,7 +29,7 @@ export default function ShopGrid() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    filters: filters,
+                    filters: activeFilters,
                     page: currentPage,
                     limit: itemsPerPage
                 })
@@ -52,71 +48,25 @@ export default function ShopGrid() {
         } finally {
             setLoading(false);
         }
-    }, [loading, filters, itemsPerPage]);
+    }, [loading, itemsPerPage]); 
 
-    
-    // Update filters and reload (single function for all filter updates)
-    const updateFilters = useCallback((newFilters) => {
-        filterStorage.saveFilters(newFilters);
-        setFilters(newFilters);
-        
-        // Clear grid and reload
-        setItems([]);
-        setPage(0);
-        setHasMore(true);
-    }, []);
-
-    // Individual filter updater functions to pass to FilterBar
-    const filterUpdaters = {
-        updateSearch: (searchTerm) => {
-            const newFilters = { ...filters, search: searchTerm };
-            updateFilters(newFilters);
-        },
-        
-        updateSort: (sortValue) => {
-            const newFilters = { ...filters, sort: sortValue };
-            updateFilters(newFilters);
-        },
-        
-        updatePrice: (min, max) => {
-            const newFilters = { ...filters, price: { min, max } };
-            updateFilters(newFilters);
-        },
-        
-        updateTypes: (types) => {
-            const newFilters = { ...filters, types };
-            updateFilters(newFilters);
-        },
-        
-        updateOnSale: (onSale) => {
-            const newFilters = { ...filters, onSale };
-            updateFilters(newFilters);
-        },
-        
-        updateMaterial: (material) => {
-            const newFilters = { ...filters, material, materialQuery: material.length > 0 };
-            updateFilters(newFilters);
-        },
-        
-        updateGem: (gem) => {
-            const newFilters = { ...filters, gem, gemQuery: gem.length > 0 };
-            updateFilters(newFilters);
-        }
-    };
-
-    // Load items when filters change
     useEffect(() => {
-        if (filters) {
-            loadItems(0, true);
+        if (filters && isHydrated) {
+            setItems([]);
+            setPage(0);
+            setHasMore(true);
+            loadItems(0, true, filters); 
         }
-    }, [filters]);
+    }, [filters, isHydrated]);
 
     // Load more items
     const loadMore = useCallback(() => {
-        if (!loading && hasMore) { loadItems(page + 1, false); }
-    }, [loading, hasMore, page, loadItems]);
+        if (!loading && hasMore) { 
+            loadItems(page + 1, false, filters);
+        }
+    }, [loading, hasMore, page, loadItems, filters]);
 
-    if (!filters) return <div>Loading...</div>;
+    if (!isHydrated || !filters) return <div>Loading...</div>;
 
     return (
         <div className="w-full h-dvh p-4">

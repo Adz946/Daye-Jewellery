@@ -1,6 +1,7 @@
 // NavPrimary.jsx - Updated with MenuDropdown component
 import { useState } from "react";
-import { Heart, Search, User, ChevronDown } from "lucide-react";
+import { Search, User, ChevronDown } from "lucide-react";
+import { useFilters } from "@/contexts/FilterContext";
 
 import { NavLink } from "./NavLink";
 import { CartIcon } from "./cart/CartIcon";
@@ -11,11 +12,21 @@ import { WishlistIcon } from "./wishlist/WishlistIcon";
 
 export default function NavPrimary() {
     const [query, setQuery] = useState("");
+    const { navigateWithFilters } = useFilters();
+
     const [activeDropdown, setActiveDropdown] = useState(null);
     const { menuData, loading, error } = useMenu();
 
     if (loading) return <nav className="flex px-12 py-4 justify-between">Loading...</nav>;
     if (error) return <nav className="flex px-12 py-4 justify-between">Error loading menu</nav>;
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if (query.trim()) {
+            navigateWithFilters({ search: query.trim() }, true);
+            setQuery("");
+        }
+    };
 
     const handleMenuHover = (menuId) => {
         setActiveDropdown(menuId);
@@ -55,11 +66,11 @@ export default function NavPrimary() {
 
             {/* OTHERS */}
             <div className="flex gap-8 items-center justify-end">
-                <div className="hidden w-[200px] xl:flex items-center border-b-2 border-dark/10">
+                <form onSubmit={handleSearchSubmit} className="hidden w-[200px] xl:flex items-center border-b-2 border-dark/10">
                     <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search"
                         className="w-full py-2 outline-none placeholder:text-dark/50"/>
                     <Search size={20} className="text-dark" />
-                </div>
+                </form>
 
                 <div className="hidden xl:flex gap-8 items-center">
                     <NavLink link="#"> <User size={24} className="animate hover:text-blue" /> </NavLink>

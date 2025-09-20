@@ -14,6 +14,10 @@ class FilterStorage {
         };
     }
 
+    get getDefaultFilters() {
+        return { ...this.defaultFilters };
+    }
+
     // Helper to check if we're on client side
     isClient() {
         return typeof window !== 'undefined';

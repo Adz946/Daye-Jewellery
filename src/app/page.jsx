@@ -2,15 +2,16 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
+import { useFilters } from "@/contexts/FilterContext";
 import { DisplayItem } from "@/components/DisplayItem";
 import { SelectionScroller } from "@/components/home/selectionScroller";
 import Reviews from "@/components/home/Reviews";
 
 export default function Home() {
     const router = useRouter();
-    const toShopNow = () => {
-        router.push("/shop");
-    };
+    const toShopNow = () => { router.push("/shop"); };
+
+    const { presetFilters } = useFilters();
 
     return (
         <main>
@@ -35,10 +36,10 @@ export default function Home() {
             {/* TYPE SELECT */}
             <section className="w-full p-4 lg:p-12 md:p-6 flex flex-col gap-4 md:gap-8">
                 <div className="w-full gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-                    <DisplayItem title="NECKLACE" text="Necklaces" />
-                    <DisplayItem title="BRACELET" text="Bracelets" />
-                    <DisplayItem title="RING" text="Rings" />
-                    <DisplayItem title="EARRING" text="Earrings" />
+                    <DisplayItem title="NECKLACE" text="Necklaces" onClick={presetFilters.filterNecklaces} />
+                    <DisplayItem title="BRACELET" text="Bracelets" onClick={presetFilters.filterBracelets} />
+                    <DisplayItem title="RING" text="Rings" onClick={presetFilters.filterRings} />
+                    <DisplayItem title="EARRING" text="Earrings" onClick={presetFilters.filterEarrings} />
                 </div>
 
                 <div className="w-full gap-4 lg:gap-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

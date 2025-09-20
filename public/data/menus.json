@@ -3,176 +3,197 @@
     {
       "id": "collections",
       "title": "Our Collections", 
-      "link": "#",
+      "link": "/shop",
       "hasSubmenu": true,
-      "submenu": [
-        {
-          "id": "minimalist",
-          "title": "Minimalist",
-          "description": "Clean, simple designs for everyday wear",
-          "link": "#"
-        },
-        {
-          "id": "statement", 
-          "title": "Statement Pieces",
-          "description": "Bold jewelry to make an impression",
-          "link": "#"
-        },
-        {
-          "id": "vintage-inspired",
-          "title": "Vintage Inspired", 
-          "description": "Timeless designs with modern craftsmanship",
-          "link": "#"
-        },
-        {
-          "id": "layering",
-          "title": "Layering Essentials",
-          "description": "Perfect pieces for mixing and matching", 
-          "link": "#"
-        },
-        {
-          "id": "bridal",
-          "title": "Bridal Collection",
-          "description": "Special pieces for your perfect day",
-          "link": "#"
-        },
-        {
-          "id": "gift-sets",
-          "title": "Gift Sets",
-          "description": "Curated jewelry bundles",
-          "link": "#"
-        }
-      ]
+      "submenu": []
     },
     {
       "id": "best-sellers",
       "title": "Best Sellers",
-      "link": "#", 
+      "link": "/shop", 
       "hasSubmenu": true,
+      "action": {
+        "type": "filter",
+        "method": "navigateWithFilters",
+        "params": { "sort": "bestsellers" }
+      },
       "submenu": [
         {
           "id": "top-necklaces",
           "title": "Top Necklaces",
           "description": "Our most loved necklace designs",
-          "link": "#"
+          "link": "/shop",
+          "action": {
+            "type": "filter",
+            "method": "navigateWithFilters",
+            "params": { "types": ["Necklace"], "sort": "bestsellers" }
+          }
         },
         {
           "id": "popular-rings", 
           "title": "Popular Rings",
           "description": "Customer favorite rings",
-          "link": "#"
+          "link": "/shop",
+          "action": {
+            "type": "filter", 
+            "method": "navigateWithFilters",
+            "params": { "types": ["Ring"], "sort": "bestsellers" }
+          }
         },
         {
           "id": "trending-earrings",
           "title": "Trending Earrings", 
           "description": "Earrings everyone's talking about",
-          "link": "#"
+          "link": "/shop",
+          "action": {
+            "type": "filter",
+            "method": "navigateWithFilters", 
+            "params": { "types": ["Earring"], "sort": "trending" }
+          }
         },
         {
           "id": "bestseller-bracelets",
           "title": "Bestseller Bracelets",
           "description": "Most purchased bracelet styles",
-          "link": "#"
+          "link": "/shop",
+          "action": {
+            "type": "filter",
+            "method": "navigateWithFilters",
+            "params": { "types": ["Bracelet"], "sort": "bestsellers" }
+          }
         },
         {
           "id": "customer-favorites",
           "title": "Customer Favorites",
           "description": "Highest rated pieces", 
-          "link": "#"
+          "link": "/shop",
+          "action": {
+            "type": "filter",
+            "method": "navigateWithFilters",
+            "params": { "sort": "rating" }
+          }
         },
         {
           "id": "most-gifted",
           "title": "Most Gifted",
           "description": "Perfect for giving to someone special",
-          "link": "#"
+          "link": "/shop", 
+          "action": {
+            "type": "filter",
+            "method": "navigateWithFilters",
+            "params": { "tags": ["gift"], "sort": "popularity" }
+          }
         }
       ]
     },
     {
       "id": "all-jewellery", 
       "title": "All Jewellery",
-      "link": "#",
+      "link": "/shop",
       "hasSubmenu": true,
+      "action": {
+        "type": "filter",
+        "method": "navigateWithFilters", 
+        "params": { "types": ["Necklace", "Bracelet", "Ring", "Earring"] }
+      },
       "submenu": [
         {
           "id": "necklaces",
           "title": "Necklaces",
           "description": "Chains, pendants, and chokers",
-          "link": "#"
+          "link": "/shop",
+          "action": {
+            "type": "filter",
+            "method": "navigateWithFilters",
+            "params": { "types": ["Necklace"] }
+          }
         },
         {
           "id": "rings",
           "title": "Rings", 
           "description": "Statement rings, bands, and stacking rings",
-          "link": "#"
+          "link": "/shop",
+          "action": {
+            "type": "filter", 
+            "method": "navigateWithFilters",
+            "params": { "types": ["Ring"] }
+          }
         },
         {
           "id": "earrings",
           "title": "Earrings",
           "description": "Studs, hoops, drops, and climbers", 
-          "link": "#"
+          "link": "/shop",
+          "action": {
+            "type": "filter",
+            "method": "navigateWithFilters",
+            "params": { "types": ["Earring"] }
+          }
         },
         {
           "id": "bracelets",
           "title": "Bracelets",
           "description": "Chains, cuffs, and charm bracelets",
-          "link": "#"
-        },
-        {
-          "id": "body-jewelry",
-          "title": "Body Jewelry",
-          "description": "Unique pieces for creative styling",
-          "link": "#"
+          "link": "/shop",
+          "action": {
+            "type": "filter",
+            "method": "navigateWithFilters", 
+            "params": { "types": ["Bracelet"] }
+          }
         }
       ]
     },
     {
       "id": "on-sale",
       "title": "On Sale",
-      "link": "#",
-      "hasSubmenu": false
+      "link": "/shop",
+      "hasSubmenu": false,
+      "action": {
+        "type": "filter", 
+        "method": "navigateWithFilters",
+        "params": { "onSale": true }
+      }
     }
   ],
   "mobileQuickLinks": [
     {
       "id": "new-arrivals",
       "title": "New Arrivals", 
-      "link": "#"
+      "link": "/shop",
+      "action": {
+        "type": "filter",
+        "method": "navigateWithFilters",
+        "params": { "sort": "newest" }
+      }
     },
     {
       "id": "under-50",
       "title": "Under $50",
-      "link": "#"
+      "link": "/shop",
+      "action": {
+        "type": "filter",
+        "method": "navigateWithFilters", 
+        "params": { "price": { "min": 0, "max": 50 } }
+      }
+    },
+    {
+      "id": "browse-collections",
+      "title": "Browse Collections",
+      "link": "/shop",
+      "action": {
+        "type": "collection_browse",
+        "method": "showCollectionScroller"
+      }
     },
     {
       "id": "care-guide", 
       "title": "Care Guide",
-      "link": "#"
+      "link": "/care-guide"
     },
     {
       "id": "size-guide",
       "title": "Size Guide", 
-      "link": "#"
-    }
-  ],
-  "userActions": [
-    {
-      "id": "account",
-      "title": "My Account",
-      "link": "#",
-      "icon": "user"
-    },
-    {
-      "id": "wishlist", 
-      "title": "Wishlist",
-      "link": "#",
-      "icon": "heart"
-    },
-    {
-      "id": "orders",
-      "title": "Order History",
-      "link": "#", 
-      "icon": "package"
+      "link": "/size-guide"
     }
   ]
 }
