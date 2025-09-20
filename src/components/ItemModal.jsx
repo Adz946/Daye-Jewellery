@@ -1,4 +1,4 @@
-// components/ItemModal.jsx
+import { createPortal } from 'react-dom';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { X, Plus, Minus, ShoppingBag, Check } from 'lucide-react';
 
@@ -99,10 +99,11 @@ export function ItemModal({ isOpen, onClose, item }) {
     const isOnSale = item.salePrice !== null && item.salePrice !== undefined;
     const currentPrice = isOnSale ? item.salePrice : item.price;
 
-    return (
-        <div onClick={handleBackdropClick} className="fixed inset-0 bg-black/50 flex items-center justify-center z-500">
+    const modalContent = (
+        <div onClick={handleBackdropClick}  className="fixed inset-0 bg-black/50 flex items-center justify-center z-[950]"
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
             <div ref={modalRef} onClick={e => e.stopPropagation()} className="bg-white rounded-lg max-w-md w-full 
-                max-h-[65vh] flex flex-col items-center">
+                mx-4 max-h-[70vh] flex flex-col items-center">
 
                 {/* Header */}
                 <div className="w-full h-14 flex justify-between items-center p-4 border-b">
@@ -136,7 +137,7 @@ export function ItemModal({ isOpen, onClose, item }) {
                         <div className="w-full mb-4">
                             <label className="block text-sm font-medium text-dark mb-2"> Size </label>
                             
-                            <div className="grid grid-cols-3 gap-4">
+                            <div className="grid gap-2 grid-cols-2 sm:grid-cols-3  sm:gap-4">
                                 {availableSizes.map(size => (
                                     <SelectButton key={size} onClick={() => setSelectedSize(size)} disabled={isAdding}
                                         isSelected={selectedSize == size}> {size} </SelectButton>
@@ -192,4 +193,6 @@ export function ItemModal({ isOpen, onClose, item }) {
             </div>
         </div>
     );
+
+    return createPortal(modalContent, document.body);
 }

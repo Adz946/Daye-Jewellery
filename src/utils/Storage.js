@@ -1,25 +1,43 @@
-// /utils/storage.js - Reusable storage operations
 export const createStorageManager = (key, storageType = 'localStorage') => {
-    const storage = storageType === 'localStorage' ? localStorage : sessionStorage;
+    const getStorage = () => {
+        if (typeof window === 'undefined') return null;
+        return storageType === 'localStorage' ? localStorage : sessionStorage;
+    };
     
     return {
         get: () => {
             try {
-                const item = storage.getItem(key);
-                return item ? JSON.parse(item) : [];
-            } catch { return []; }
+                const storage = getStorage();
+                if (!storage) return [];
+                
+                const data = storage.getItem(key);
+                return data ? JSON.parse(data) : [];
+            } catch (error) {
+                console.warn(`Failed to get ${key} from ${storageType}:`, error);
+                return [];
+            }
         },
         
-        set: (() => {
-            let timeoutId = null;
-            return (data) => {
-                if (timeoutId) clearTimeout(timeoutId);
-                timeoutId = setTimeout(() => {
-                    storage.setItem(key, JSON.stringify(data));
-                }, 300); // Shared 300ms debounce
-            };
-        })(),
+        set: (data) => {
+            try {
+                const storage = getStorage();
+                if (!storage) return;
+                
+                storage.setItem(key, JSON.stringify(data));
+            } catch (error) {
+                console.warn(`Failed to set ${key} in ${storageType}:`, error);
+            }
+        },
         
-        clear: () => storage.removeItem(key)
+        clear: () => {
+            try {
+                const storage = getStorage();
+                if (!storage) return;
+                
+                storage.removeItem(key);
+            } catch (error) {
+                console.warn(`Failed to clear ${key} from ${storageType}:`, error);
+            }
+        }
     };
 };

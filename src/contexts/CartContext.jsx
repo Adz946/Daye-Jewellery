@@ -1,12 +1,13 @@
 "use client"; 
-import { createContext, useContext, useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import { createStorageManager } from '@/utils/Storage';
 
 const CartContext = createContext();
-const CART_KEY = 'jewelry_cart';
+const cartStorage = createStorageManager('jewelry_cart', 'sessionStorage');
 
 export function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
-    const saveTimeoutRef = useRef(null);
+    const [isHydrated, setIsHydrated] = useState(false);
 
     const cartCount = useMemo(() => {
         return cart.reduce((total, item) => total + item.quantity, 0);
@@ -18,34 +19,11 @@ export function CartProvider({ children }) {
         }, 0);
     }, [cart]);
 
-    const debouncedSave = useCallback((cartData) => {
-        if (saveTimeoutRef.current) {
-            clearTimeout(saveTimeoutRef.current);
-        }
-        
-        saveTimeoutRef.current = setTimeout(() => {
-            sessionStorage.setItem(CART_KEY, JSON.stringify(cartData));
-        }, 300);
-    }, []);
-
+    // Load from sessionStorage on mount
     useEffect(() => {
-        const savedCart = sessionStorage.getItem(CART_KEY);
-        if (savedCart) {
-            try { 
-                setCart(JSON.parse(savedCart)); 
-            } catch (error) {
-                console.error('Error Loading Cart:', error);
-                setCart([]);
-            }
-        }
-    }, []);
-
-    useEffect(() => {
-        return () => {
-            if (saveTimeoutRef.current) {
-                clearTimeout(saveTimeoutRef.current);
-            }
-        };
+        setIsHydrated(true);
+        const savedCart = cartStorage.get();
+        setCart(savedCart);
     }, []);
 
     const addToCart = useCallback((itemId, desc, price, size, quantity = 1) => {
@@ -68,24 +46,24 @@ export function CartProvider({ children }) {
                 }];
             }
 
-            debouncedSave(newCart);
+            cartStorage.set(newCart);
             return newCart;
         });
-    }, [debouncedSave]);
+    }, []);
 
     const removeFromCart = useCallback((itemId, size) => {
         setCart(prevCart => {
             const newCart = prevCart.filter(
                 item => !(item.itemId === itemId && item.size === size)
             );
-            debouncedSave(newCart);
+            cartStorage.set(newCart);
             return newCart;
         });
-    }, [debouncedSave]);
+    }, []);
 
     const clearCart = useCallback(() => {
         setCart([]);
-        sessionStorage.removeItem(CART_KEY);
+        cartStorage.clear();
     }, []);
 
     const updateQuantity = useCallback((itemId, size, newQuantity) => {
@@ -96,7 +74,7 @@ export function CartProvider({ children }) {
                 const newCart = prevCart.filter(
                     item => !(item.itemId === itemId && item.size === size)
                 );
-                debouncedSave(newCart);
+                cartStorage.set(newCart);
                 return newCart;
             }
             
@@ -106,10 +84,10 @@ export function CartProvider({ children }) {
                     : item
             );
             
-            debouncedSave(newCart);
+            cartStorage.set(newCart);
             return newCart;
         });
-    }, [debouncedSave]);
+    }, []);
 
     const value = useMemo(() => ({
         cart,
@@ -120,6 +98,9 @@ export function CartProvider({ children }) {
         updateQuantity,
         clearCart
     }), [cart, cartCount, cartTotal, addToCart, removeFromCart, updateQuantity, clearCart]);
+
+    // Prevent hydration mismatch
+    if (!isHydrated) return <div style={{display: 'none'}}>{children}</div>;
 
     return (
         <CartContext.Provider value={value}>

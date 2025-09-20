@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
 import { DisplayItem } from "@/components/DisplayItem";
 import { SelectionScroller } from "@/components/home/selectionScroller";
+import Reviews from "@/components/home/Reviews";
 
 export default function Home() {
     const router = useRouter();
@@ -22,10 +23,6 @@ export default function Home() {
                     </video>
                 </div>
 
-                <div className="w-full h-full z-10 p-5 sm:p-15 bg-black/20 flex flex-col text-center items-center justify-end">
-                    <div className="flex flex-col gap-2 text-base sm:text-base md:text-2xl font-bold mb-4">
-                        <p>NEW ARRIVALS</p>
-                        <p>NOW AVAILABLE</p>
                 <div className="w-full h-full z-50 gap-5 p-15 bg-black/20 flex flex-col text-center items-center justify-end">
                     <div className="flex flex-col gap-2 font-bold">
                         <p className="text-xl">NEW ARRIVALS</p>
@@ -80,6 +77,7 @@ export default function Home() {
             </section>
 
             <SelectionScroller title="BEST SELLERS" />
+            <Reviews />
         </main>
     );
 }
