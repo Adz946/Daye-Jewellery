@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, Heart, ShoppingBag } from 'lucide-react';
 
 import { ShopItem } from './ShopItem';
+import { cachedFetch } from "@/utils/RequestCache";
 import { useCart, useWishlist } from '@/contexts/AppProvider';
 import { useToasts, useLoading } from '@/contexts/UIProvider';
 
@@ -19,13 +20,7 @@ export default function CollectionGrid({ collection, onBack }) {
         setLoading('collectionItems', true)
         
         try {
-            const response = await fetch('/api/collection-items-query', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ collectionID: collection.CollectionID })
-            });
-
-            const data = await response.json();
+            const data = await cachedFetch(`/api/collection-items?collectionID=${collection.CollectionID}`);
             if (data.success) { setItems(data.results); }
         } catch (error) {
             console.error('Failed to load collection items:', error);
@@ -69,7 +64,7 @@ export default function CollectionGrid({ collection, onBack }) {
     if (!collection) return null;
 
     return (
-        <div className="w-full h-dvh p-4">
+        <div className="w-full h-7/8 p-4">
             <div className="w-full mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 
                 {/* Breadcrumbs & Back Button */}

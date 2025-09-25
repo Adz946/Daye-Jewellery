@@ -5,8 +5,10 @@ import { Suspense } from "react";
 import { UIProvider } from "@/contexts/UIProvider";
 import { AppProvider } from "@/contexts/AppProvider";
 import { GlobalModal } from "@/components/GlobalModal";
-import NavController from "@/components/nav/NavController";
 import { ToastContainer } from '@/components/ToastContainer';
+
+import Footer from "@/components/foot/Footer";
+import NavController from "@/components/nav/NavController";
 
 const montserrat = Montserrat({
 	variable: "--font-montserrat", subsets: ["latin"]
@@ -24,9 +26,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className={`${montserrat.variable} ${sofiaSans.variable} antialiased`}>
+			<body className={`${montserrat.variable} ${sofiaSans.variable} antialiased min-h-screen flex flex-col`}>
 				<Suspense fallback={
-					<div className="w-full h-full flex items-center justify-center text-center text-bold">
+					<div className="w-full h-dvh flex flex-col items-center justify-center text-center text-bold">
 						<h1 className="text-3xl">Loading Content....</h1>
 						<p className="text-lg">Please Be Patient</p>
 					</div>
@@ -34,7 +36,9 @@ export default function RootLayout({ children }) {
 					<AppProvider>
 						<UIProvider>
 							<NavController />
-							{children}
+							<main className="flex-1"> {children} </main>
+							<Footer />
+
 							<GlobalModal />
 							<ToastContainer /> 
 						</UIProvider>

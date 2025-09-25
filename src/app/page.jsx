@@ -15,7 +15,7 @@ export default function Home() {
     const toShopNow = () => { router.push("/shop");  };
 
     return (
-        <main>
+        <>
             {/* HEAD */}
             <section className="stacked h-full text-light font-main">
                 <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
@@ -119,7 +119,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <SelectionScroller title="BEST SELLERS" apiEndpoint="best-seller" />
+            <SelectionScroller title="BEST SELLERS" apiEndpoint="best-sellers" />
 
             <section className="relative aspect-[12/10] w-full md:aspect-auto md:h-screen">
                 <picture>
@@ -153,8 +153,8 @@ export default function Home() {
                 </div>
             </section>
 
-            <SelectionScroller title="OUR COLLECTIONS" type="collection" apiEndpoint="collection" />
+            <SelectionScroller title="OUR COLLECTIONS" type="collections" apiEndpoint="collections" />
             <Reviews />
-        </main>
+        </>
     );
 }
