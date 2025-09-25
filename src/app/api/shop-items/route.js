@@ -197,11 +197,17 @@ function queryDB(sql, params = []) {
     });
 }
 
-export async function POST(request) {
+export async function GET(request) {
     try {
-        const { filters, page = 0, limit = 20 } = await request.json();
-        const queryBuilder = new JewelryQueryBuilder();
+        const { searchParams } = new URL(request.url);
         
+        // Parse filters from search params
+        const filtersParam = searchParams.get('filters');
+        const filters = filtersParam ? JSON.parse(filtersParam) : {};
+        const page = parseInt(searchParams.get('page') || '0');
+        const limit = parseInt(searchParams.get('limit') || '20');
+
+        const queryBuilder = new JewelryQueryBuilder();
         const offset = page * limit;
         const result = queryBuilder.buildQuery(filters, limit, offset);
         const data = await queryDB(result.query, result.params);

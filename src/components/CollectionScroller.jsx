@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Scroller } from "@/components/Scroller";
 
+import { cachedFetch } from "@/utils/RequestCache";
 import { CollectionItem } from "@/components/CollectionItem";
 import { useLoading, useToasts } from '@/contexts/UIProvider';
 
@@ -15,15 +16,8 @@ export default function CollectionScroller({ onCollectionSelect, selectedCollect
         setLoading('collections', true);
 
         try {
-            const response = await fetch('/api/collection-query', {
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            const data = await response.json();
-            if (data.success) { 
-                setItems(data.results); 
-            }
+            const data = await cachedFetch('/api/collections');
+            if (data.success) { setItems(data.results); }
         } 
         catch (error) { addToast({ message: 'Failed to load collections', type: 'error' }); } 
         finally { setLoading('collections', false); }

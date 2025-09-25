@@ -32,7 +32,7 @@ function headerNav() {
 
 export default function PrivacyPolicyPage() {
     return (
-        <main className="w-full mx-auto p-5 gap-5 text-dark flex">
+        <section className="w-full mx-auto p-5 gap-5 text-dark flex">
             {headerNav()}
 
             <section className="w-3/4 flex flex-col px-8 gap-6 leading-relaxed">
@@ -180,6 +180,6 @@ export default function PrivacyPolicyPage() {
                     <span className="underline">dayejewelleryhelp@gmail.com</span>
                 </p>
             </section>
-        </main>
+        </section>
     );
 }

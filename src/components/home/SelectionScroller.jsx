@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 
 import { Scroller } from "@/components/Scroller";
 import { ShopItem } from "@/components/ShopItem";
+import { useToasts } from '@/contexts/UIProvider';
 import { CollectionItem } from '../CollectionItem';
-import { useLoading, useToasts } from '@/contexts/UIProvider';
+import { cachedFetch } from "@/utils/RequestCache";
 
 function addShopItem(key, item) {
     return (
@@ -23,35 +24,33 @@ export function SelectionScroller({ title, apiEndpoint, type = "shop" }) {
     const navToShop = (id) => { router.push(`/shop?collection=${id}`); };
 
     const [items, setItems] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasLoaded, setHasLoaded] = useState(false);
 
     const { addToast } = useToasts();
-    const { loading, setLoading } = useLoading();
 
     const loadScrollItems = async () => {
-        if (loading.scrollItems) return;      
-        setLoading('scrollItems', true);
+        if (isLoading || hasLoaded) return;
+        setIsLoading(true);
 
         try {
-            const response = await fetch(`/api/${apiEndpoint}-query`, {
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            const data = await response.json();
+            const data = await cachedFetch(`/api/${apiEndpoint}`);
+            
             if (data.success) { 
                 setItems(data.results); 
+                setHasLoaded(true);
             }
         } 
-        catch (error) { addToast({ message: 'Failed to load best sellers', type: 'error' }); } 
-        finally { setLoading('scrollItems', false); }
+        catch (error) { addToast({ message: `Failed to load ${title}`, type: 'error' }); } 
+        finally { setIsLoading(false);  }
     };
 
-    useEffect(() => { loadScrollItems(); }, []);
+    useEffect(() => { loadScrollItems(); }, [apiEndpoint]);
 
     return (
         <section className="section p-12">
             <Scroller title={title}>
-                {loading.scrollItems ? ( 
+                {isLoading ? ( 
                     <div className="flex gap-4">
                         {[...Array(4)].map((_, i) => (
                             <div key={i} className="w-64 h-80 bg-gray-200 animate-pulse rounded" />

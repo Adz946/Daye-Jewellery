@@ -17,13 +17,12 @@ function queryDB(sql, params = []) {
     });
 }
 
-export async function POST() {
+export async function GET() {
     try {
         const collections = await queryDB('SELECT * FROM vw_CollectionCurrent');
         
         return Response.json({
             success: true,
-            resultCount: collections.length,
             results: collections
         });
 

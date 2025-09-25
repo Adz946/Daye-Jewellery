@@ -113,7 +113,7 @@ export function ItemModal({ isOpen, item, closeModal, onSuccess }) {
             <div ref={modalRef} className="bg-white rounded-lg max-w-[500px] w-full mx-4 max-h-[90vh] flex flex-col items-center">
 
                 {/* Header */}
-                <div className="w-full h-14 flex justify-between items-center p-4 border-b">
+                <div className="w-full h-14 mb-4 flex justify-between items-center p-4 border-b">
                     <h2 className="text-lg font-semibold text-dark">Add to Cart</h2>
                     <button onClick={closeModal} className="text-dark hover:text-red animate" disabled={isAdding}> 
                         <X size={24} /> 
