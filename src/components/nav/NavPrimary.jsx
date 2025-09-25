@@ -1,39 +1,61 @@
-// NavPrimary.jsx - Updated with MenuDropdown component
 import { useState } from "react";
 import { Search, User, ChevronDown } from "lucide-react";
-import { useFilters } from "@/contexts/FilterContext";
 
 import { NavLink } from "./NavLink";
-import { CartIcon } from "./cart/CartIcon";
-import { MenuDropdown } from "./MenuDropdown";
 import { MenuItem } from "./MenuItem";
 import { useMenu } from "@/hooks/useMenu";
+import { CartIcon } from "./cart/CartIcon";
+import { MenuDropdown } from "./MenuDropdown";
+import { useFilters } from "@/contexts/FilterContext";
 import { WishlistIcon } from "./wishlist/WishlistIcon";
+import { useDropdowns, useLoading, useToasts } from "@/contexts/UIProvider";
 
 export default function NavPrimary() {
     const [query, setQuery] = useState("");
     const { navigateWithFilters } = useFilters();
 
-    const [activeDropdown, setActiveDropdown] = useState(null);
-    const { menuData, loading, error } = useMenu();
+    const { dropdowns, toggleDropdown, closeAllDropdowns } = useDropdowns();
+    const { loading, setLoading } = useLoading();
+    const { addToast } = useToasts();
+    const { menuData, loading: menuLoading, error } = useMenu();
 
-    if (loading) return <nav className="flex px-12 py-4 justify-between">Loading...</nav>;
+    if (menuLoading) return <nav className="flex px-12 py-4 justify-between">Loading...</nav>;
     if (error) return <nav className="flex px-12 py-4 justify-between">Error loading menu</nav>;
 
-    const handleSearchSubmit = (e) => {
+    const handleSearchSubmit = async (e) => {
         e.preventDefault();
-        if (query.trim()) {
-            navigateWithFilters({ search: query.trim() }, true);
+        if (loading.search || !query.trim()) return;
+        
+        setLoading('search', true);
+        try {
+            await navigateWithFilters({ search: query.trim() }, true);
             setQuery("");
+            addToast({ 
+                message: 'Search completed', 
+                type: 'success',
+                duration: 2000 
+            });
+        } catch (error) {
+            console.error('Search failed:', error);
+            addToast({ 
+                message: 'Search failed. Please try again.', 
+                type: 'error',
+                duration: 4000 
+            });
+        } finally {
+            setLoading('search', false);
         }
     };
 
     const handleMenuHover = (menuId) => {
-        setActiveDropdown(menuId);
+        const menuKey = `menu-${menuId}`;
+        if (!dropdowns[menuKey]) {
+            toggleDropdown(menuKey);
+        }
     };
 
     const handleMenuLeave = () => {
-        setActiveDropdown(null);
+        closeAllDropdowns();
     };
 
     return (
@@ -55,8 +77,8 @@ export default function NavPrimary() {
                                 
                                 <MenuDropdown 
                                     menuItem={menuItem}
-                                    isOpen={activeDropdown === menuItem.id}
-                                    onClose={() => setActiveDropdown(null)}
+                                    isOpen={dropdowns[`menu-${menuItem.id}`] || false}
+                                    onClose={closeAllDropdowns}
                                 />
                             </div>
                         </li>
@@ -67,13 +89,29 @@ export default function NavPrimary() {
             {/* OTHERS */}
             <div className="flex gap-8 items-center justify-end">
                 <form onSubmit={handleSearchSubmit} className="hidden w-[200px] xl:flex items-center border-b-2 border-dark/10">
-                    <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search"
-                        className="w-full py-2 outline-none placeholder:text-dark/50"/>
-                    <Search size={20} className="text-dark" />
+                    <input 
+                        value={query} 
+                        onChange={(e) => setQuery(e.target.value)} 
+                        placeholder="Search"
+                        disabled={loading.search}
+                        className={`w-full py-2 outline-none placeholder:text-dark/50 ${loading.search ? 'opacity-50' : ''}`}
+                    />
+                    <button 
+                        type="submit" 
+                        disabled={loading.search}
+                        className={`ml-2 ${loading.search ? 'opacity-50' : ''}`}
+                    >
+                        <Search 
+                            size={20} 
+                            className={`text-dark ${loading.search ? 'animate-pulse' : ''}`} 
+                        />
+                    </button>
                 </form>
 
                 <div className="hidden xl:flex gap-8 items-center">
-                    <NavLink link="#"> <User size={24} className="animate hover:text-blue" /> </NavLink>
+                    <NavLink link="#"> 
+                        <User size={24} className="animate hover:text-blue" /> 
+                    </NavLink>
                     <WishlistIcon />
                     <CartIcon />
 

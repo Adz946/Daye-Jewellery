@@ -1,7 +1,8 @@
 import { ArrowRight, ChevronDown } from "lucide-react";
+
 import { NavLink } from "./NavLink";
-import { useFilters } from "@/contexts/FilterContext";
 import { useRouter } from "next/navigation";
+import { useFilters } from "@/contexts/FilterContext";
 
 export function MenuItem({ menuItem, variant = "mobile", onClick = null, className = "", onMenuClose }) {
     const { navigateWithFilters, navigateToCollection } = useFilters();

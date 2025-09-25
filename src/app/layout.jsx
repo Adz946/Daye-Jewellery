@@ -1,10 +1,11 @@
 import { Montserrat, Sofia_Sans } from "next/font/google";
 import "../styles/globals.css";
 
-import { CartProvider } from "@/contexts/CartContext";
-import { FilterProvider } from "@/contexts/FilterContext";
-import { WishlistProvider } from "@/contexts/WishlistContext";
+import { ToastContainer } from '@/components/ToastContainer';
 import NavController from "@/components/nav/NavController";
+import { GlobalModal } from "@/components/GlobalModal";
+import { AppProvider } from "@/contexts/AppProvider";
+import { UIProvider } from "@/contexts/UIProvider";
 
 const montserrat = Montserrat({
 	variable: "--font-montserrat", subsets: ["latin"]
@@ -23,14 +24,14 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={`${montserrat.variable} ${sofiaSans.variable} antialiased`}>
-				<CartProvider>
-					<FilterProvider>
-						<WishlistProvider>
-							<NavController />
-							{children}
-						</WishlistProvider>
-					</FilterProvider>
-				</CartProvider>
+				<AppProvider>
+					<UIProvider>
+						<NavController />
+						{children}
+						<GlobalModal />
+						<ToastContainer /> 
+					</UIProvider>
+				</AppProvider>
 			</body>
 		</html>
 	);

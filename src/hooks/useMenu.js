@@ -32,7 +32,7 @@ export function useMenu() {
                 const dynamicCollectionsSubmenu = collectionsArray.map(collection => ({
                     id: `collection-${collection.CollectionID}`,
                     title: collection.Name,
-                    description: `${collection.Type} Collection • ${collection.ItemCount || 0} items`,
+                    description: `${collection.Type} • ${collection.ItemCount || 0} items`,
                     link: `/shop?collection=${collection.CollectionID}`,
                     action: {
                         type: "collection_view",
@@ -57,18 +57,7 @@ export function useMenu() {
                                     params: { page: "/shop" }
                                 },
                                 submenu: [
-                                    ...dynamicCollectionsSubmenu,
-                                    // Add separator or special items
-                                    {
-                                        id: "browse-all-collections",
-                                        title: "Browse All Collections",
-                                        description: "View our complete collection gallery",
-                                        link: "/shop",
-                                        action: {
-                                            type: "page",
-                                            params: { page: "/shop" }
-                                        }
-                                    }
+                                    ...dynamicCollectionsSubmenu
                                 ]
                             };
                         }
