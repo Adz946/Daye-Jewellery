@@ -1,13 +1,9 @@
 import { Montserrat, Sofia_Sans } from "next/font/google";
 import "../styles/globals.css";
-
 import { Suspense } from "react";
-import { UIProvider } from "@/contexts/UIProvider";
-import { AppProvider } from "@/contexts/AppProvider";
-import { GlobalModal } from "@/components/GlobalModal";
-import { ToastContainer } from '@/components/ToastContainer';
-
-import Footer from "@/components/foot/Footer";
+import { CartProvider } from "@/contexts/CartContext";
+import { FilterProvider } from "@/contexts/FilterContext";
+import { WishlistProvider } from "@/contexts/WishlistContext";
 import NavController from "@/components/nav/NavController";
 
 const montserrat = Montserrat({
@@ -23,27 +19,26 @@ export const metadata = {
 	description: "Handcrafted, everyday pieces designed for effortless style. Unique, modern, and made to last — find jewellery that tells your story."
 };
 
+function Providers({ children }) {
+    return (
+        <CartProvider>
+            <WishlistProvider>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <FilterProvider>
+						<NavController />
+                        {children}
+                    </FilterProvider>
+                </Suspense>
+            </WishlistProvider>
+        </CartProvider>
+    );
+}
+
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className={`${montserrat.variable} ${sofiaSans.variable} antialiased min-h-screen flex flex-col`}>
-				<Suspense fallback={
-					<div className="w-full h-dvh flex flex-col items-center justify-center text-center text-bold">
-						<h1 className="text-3xl">Loading Content....</h1>
-						<p className="text-lg">Please Be Patient</p>
-					</div>
-				}>
-					<AppProvider>
-						<UIProvider>
-							<NavController />
-							<main className="flex-1"> {children} </main>
-							<Footer />
-
-							<GlobalModal />
-							<ToastContainer /> 
-						</UIProvider>
-					</AppProvider>
-				</Suspense>
+			<body className={`${montserrat.variable} ${sofiaSans.variable} antialiased`}>
+				<Providers> {children} </Providers>
 			</body>
 		</html>
 	);
