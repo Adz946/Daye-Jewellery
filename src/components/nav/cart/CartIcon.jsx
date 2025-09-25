@@ -1,18 +1,20 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { ShoppingBag } from 'lucide-react';
 
 import { NavLink } from '../NavLink';
 import { CartDropdown } from './CartDropdown';
-import { useCart } from '@/contexts/CartContext';
+import { useCart } from '@/contexts/AppProvider';
+import { useDropdowns } from '@/contexts/UIProvider';
 
 export function CartIcon({ size = 24, onClick = null, classes = "" }) {
     const { cartCount } = useCart();
-    const [isOpen, setIsOpen] = useState(false);
+    const { dropdowns, toggleDropdown } = useDropdowns();
     const triggerRef = useRef(null);
+    const isOpen = dropdowns.cart;
 
     return (
         <div className="relative">            
-            <NavLink link="#" onClick={onClick || (() => setIsOpen(!isOpen))} ref={triggerRef} classes={classes}> 
+            <NavLink link="#" onClick={onClick || (() => toggleDropdown('cart'))} ref={triggerRef} classes={classes}> 
                 <ShoppingBag size={size} className="animate hover:text-blue" /> 
 
                 {cartCount > 0 && (
@@ -21,7 +23,7 @@ export function CartIcon({ size = 24, onClick = null, classes = "" }) {
                 )}
             </NavLink>
 
-            {onClick ? <></> : <CartDropdown isOpen={isOpen} onClose={() => setIsOpen(false)} triggerRef={triggerRef} />}
+            {onClick ? <></> : <CartDropdown isOpen={isOpen} triggerRef={triggerRef} />}
         </div>
     );
 }

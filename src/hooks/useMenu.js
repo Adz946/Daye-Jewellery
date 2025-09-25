@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { cachedFetch } from "@/utils/RequestCache";
 
 export function useMenu() {
     const [menuData, setMenuData] = useState(null);
@@ -17,22 +18,16 @@ export function useMenu() {
                 const menuData = await menuResponse.json();
 
                 // Fetch dynamic collections data
-                const collectionsResponse = await fetch('/api/collection-query', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                const collectionsData = await collectionsResponse.json();
+                const collectionsData = await cachedFetch('/api/collections');
                 
                 let collectionsArray = [];
-                if (collectionsData.success) {
-                    collectionsArray = collectionsData.results;
-                }
+                if (collectionsData.success) { collectionsArray = collectionsData.results; }
 
                 // Build dynamic collections submenu
                 const dynamicCollectionsSubmenu = collectionsArray.map(collection => ({
                     id: `collection-${collection.CollectionID}`,
                     title: collection.Name,
-                    description: `${collection.Type} Collection • ${collection.ItemCount || 0} items`,
+                    description: `${collection.Type} • ${collection.ItemCount || 0} items`,
                     link: `/shop?collection=${collection.CollectionID}`,
                     action: {
                         type: "collection_view",
@@ -57,18 +52,7 @@ export function useMenu() {
                                     params: { page: "/shop" }
                                 },
                                 submenu: [
-                                    ...dynamicCollectionsSubmenu,
-                                    // Add separator or special items
-                                    {
-                                        id: "browse-all-collections",
-                                        title: "Browse All Collections",
-                                        description: "View our complete collection gallery",
-                                        link: "/shop",
-                                        action: {
-                                            type: "page",
-                                            params: { page: "/shop" }
-                                        }
-                                    }
+                                    ...dynamicCollectionsSubmenu
                                 ]
                             };
                         }

@@ -1,23 +1,21 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { ChevronRight, RefreshCcw, Shield, Truck } from "lucide-react";
+
 import { Button } from "@/components/Button";
+import Reviews from "@/components/home/Reviews";
 import { useFilters } from "@/contexts/FilterContext";
 import { DisplayItem } from "@/components/DisplayItem";
-import { SelectionScroller } from "@/components/home/selectionScroller";
-import Reviews from "@/components/home/Reviews";
-import { ChevronRight } from "lucide-react";
+import { SelectionScroller } from "@/components/home/SelectionScroller";
 
 export default function Home() {
     const router = useRouter();
-    const toShopNow = () => {
-        router.push("/shop");
-    };
-
     const { presetFilters } = useFilters();
+    const toShopNow = () => { router.push("/shop");  };
 
     return (
-        <main>
+        <>
             {/* HEAD */}
             <section className="stacked h-full text-light font-main">
                 <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
@@ -39,10 +37,27 @@ export default function Home() {
                         <p className="text-2xl">NOW AVAILABLE</p>
                     </div>
                     <Button
-                        wd="lg:w-1/3"
+                        wd="w-full lg:w-1/3"
                         text={"SHOP NOW"}
                         onClick={toShopNow}
                     />
+                </div>
+            </section>
+
+            <section className="w-full py-12 bg-light/30">
+                <div className="flex gap-8 md:gap-16 flex-col md:flex-row justify-center items-center text-center">
+                    <div className="flex flex-col items-center gap-2">
+                        <Shield size={64} />
+                        <p className="text-md font-semibold">Lifetime Warranty</p>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                        <Truck size={64} />
+                        <p className="text-md font-semibold">Free Shipping Over $150</p>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                        <RefreshCcw size={64} />
+                        <p className="text-md font-semibold">30-Day Returns</p>
+                    </div>
                 </div>
             </section>
 
@@ -69,12 +84,6 @@ export default function Home() {
                         text="Earrings"
                         onClick={presetFilters.filterEarrings}
                     />
-                </div>
-
-                <div className="w-full gap-4 lg:gap-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    <DisplayItem title="COLLECTION" text="Shop By Collection" />
-                    <DisplayItem title="BEST" text="Shop By Best Sellers" />
-                    <DisplayItem title="ITEM" text="Shop By... Other?" />
                 </div>
             </section>
 
@@ -103,14 +112,14 @@ export default function Home() {
                         Ready to elevate your look?
                     </p>
                     <Button
-                        wd="lg:w-1/3"
+                        wd="w-full lg:w-1/3"
                         text={"SHOP NOW"}
                         onClick={toShopNow}
                     />
                 </div>
             </section>
 
-            <SelectionScroller title="BEST SELLERS" />
+            <SelectionScroller title="BEST SELLERS" apiEndpoint="best-sellers" />
 
             <section className="relative aspect-[12/10] w-full md:aspect-auto md:h-screen">
                 <picture>
@@ -144,7 +153,8 @@ export default function Home() {
                 </div>
             </section>
 
+            <SelectionScroller title="OUR COLLECTIONS" type="collections" apiEndpoint="collections" />
             <Reviews />
-        </main>
+        </>
     );
 }
