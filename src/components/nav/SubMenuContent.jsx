@@ -1,7 +1,8 @@
 import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 import { NavLink } from "./NavLink";
 import { useFilters } from "@/contexts/FilterContext";
-import { useRouter } from "next/navigation";
 
 export function SubMenuContent({ submenu, onBack, onMenuClose }) {
     const { navigateWithFilters, navigateToCollection } = useFilters();

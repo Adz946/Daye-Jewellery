@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-import NavPrimary from "./NavPrimary";
 import NavMobile from "./NavMobile";
+import NavPrimary from "./NavPrimary";
 
 export default function NavController() {
     const pathname = usePathname();

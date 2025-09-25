@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Scroller } from "@/components/Scroller";
+
 import { CollectionItem } from "@/components/CollectionItem";
+import { useLoading, useToasts } from '@/contexts/UIProvider';
 
 export default function CollectionScroller({ onCollectionSelect, selectedCollectionId = null }) {
     const [items, setItems] = useState([]);
-    const [loading, setLoading] = useState(false);
+
+    const { addToast } = useToasts();
+    const { loading, setLoading } = useLoading();
 
     const loadCollections = async () => {
-        if (loading) return;      
-        setLoading(true);
+        if (loading.collections) return;      
+        setLoading('collections', true);
 
         try {
             const response = await fetch('/api/collection-query', {
@@ -20,11 +24,9 @@ export default function CollectionScroller({ onCollectionSelect, selectedCollect
             if (data.success) { 
                 setItems(data.results); 
             }
-        } catch (error) {
-            console.error('Failed to load collections:', error);
-        } finally {
-            setLoading(false);
-        }
+        } 
+        catch (error) { addToast({ message: 'Failed to load collections', type: 'error' }); } 
+        finally { setLoading('collections', false); }
     };
 
     const handleCollectionSelect = (collection) => {
@@ -36,7 +38,7 @@ export default function CollectionScroller({ onCollectionSelect, selectedCollect
     return (
         <div className="flex text-center items-center justify-center">
             <Scroller title="Our Collections">
-                {loading ? ( <p>Loading collections...</p> ) : (
+                {loading.collections ? ( <p>Loading collections...</p> ) : (
                     items.map((item, index) => (
                         <CollectionItem key={`${item.CollectionID}-${index}`} item={item} 
                             onSelect={handleCollectionSelect} isSelected={selectedCollectionId === item.CollectionID} />

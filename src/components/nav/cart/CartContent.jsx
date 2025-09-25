@@ -1,8 +1,9 @@
 import { memo } from "react";
 import { ShoppingBag } from "lucide-react";
+
 import { CartItem } from "./CartItem";
 import { Button } from "@/components/Button";
-import { useCart } from '@/contexts/CartContext';
+import { useCart } from "@/contexts/AppProvider";
 
 export const CartContent = memo(function CartContent({ showTitle = false, className = "" }) {
     const { cart, removeFromCart, cartCount, cartTotal, updateQuantity } = useCart();

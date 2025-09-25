@@ -1,39 +1,14 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef } from 'react';
 import { X } from 'lucide-react';
 
 import { CartContent } from './CartContent';
-import { useCart } from '@/contexts/CartContext';
+import { useCart } from '@/contexts/AppProvider';
+import { useDropdowns } from '@/contexts/UIProvider';
 
-export function CartDropdown({ isOpen, onClose, triggerRef }) {
+export function CartDropdown({ isOpen, triggerRef }) {
     const { cartCount } = useCart();
+    const { toggleDropdown } = useDropdowns();
     const dropdownRef = useRef(null);
-
-    const handleClickOutside = useCallback((e) => {
-        if (dropdownRef.current && 
-            !dropdownRef.current.contains(e.target) &&
-            triggerRef.current && 
-            !triggerRef.current.contains(e.target)) {
-            onClose();
-        }
-    }, [onClose]);
-
-    const handleEscape = useCallback((e) => {
-        if (e.key === 'Escape' && isOpen) {
-            onClose();
-        }
-    }, [isOpen, onClose]);
-
-    useEffect(() => {
-        if (!isOpen) return;
-        
-        document.addEventListener('mousedown', handleClickOutside);
-        document.addEventListener('keydown', handleEscape);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-            document.removeEventListener('keydown', handleEscape);
-        };
-    }, [isOpen, handleClickOutside, handleEscape]);
 
     if (!isOpen) return null;
 
@@ -43,7 +18,7 @@ export function CartDropdown({ isOpen, onClose, triggerRef }) {
             
             <div className="h-16 flex justify-between items-center p-4 border-b border-dark/10">
                 <h3 className="font-semibold text-dark">Shopping Cart ({cartCount})</h3>
-                <button onClick={onClose} className="text-dark hover:text-red">
+                <button onClick={() => toggleDropdown('cart')} className="text-dark hover:text-red">
                     <X size={20} />
                 </button>
             </div>

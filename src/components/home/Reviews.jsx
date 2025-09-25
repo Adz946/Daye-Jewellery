@@ -1,4 +1,3 @@
-// Dummy review data (yes data is gpt generated lol)
 const reviewsData = [
     {
         id: 1,

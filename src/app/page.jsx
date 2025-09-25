@@ -70,12 +70,6 @@ export default function Home() {
                         onClick={presetFilters.filterEarrings}
                     />
                 </div>
-
-                <div className="w-full gap-4 lg:gap-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    <DisplayItem title="COLLECTION" text="Shop By Collection" />
-                    <DisplayItem title="BEST" text="Shop By Best Sellers" />
-                    <DisplayItem title="ITEM" text="Shop By... Other?" />
-                </div>
             </section>
 
             <section className="w-full p-4 lg:p-12 md:p-6 flex flex-col md:flex-row items-center gap-6 md:gap-8">

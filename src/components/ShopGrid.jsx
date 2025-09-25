@@ -1,28 +1,33 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useFilters } from '@/contexts/FilterContext';
+import { Search, Filter, X } from 'lucide-react';
+
+import { Button } from './Button';
 import FilterBar from './FilterBar';
 import { ShopItem } from './ShopItem';
 import { Toggle } from './filter/Toggle';
-import { Search, Filter, X } from 'lucide-react';
-import { Button } from './Button';
+import { useToasts, useLoading } from '@/contexts/UIProvider';
+import { useFilters } from '@/contexts/FilterContext';
 
 export default function ShopGrid() {
     const [items, setItems] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);    
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+    const { addToast } = useToasts();
+    const { loading, setLoading } = useLoading();
     
     const { filters, filterUpdaters, isHydrated } = useFilters();
     const itemsPerPage = 20;
 
     const loadItems = useCallback(async (currentPage = 0, clearGrid = false, filtersToUse = null) => {
-        if (loading) return;
+        if (loading.shopGrid || loading.loadMore) return;
         
         const activeFilters = filtersToUse || filters;
         if (!activeFilters) return;
         
-        setLoading(true);
+        const loadingKey = clearGrid ? 'shopGrid' : 'loadMore';
+        setLoading(loadingKey, true);
         
         try {
             const response = await fetch('/api/item-query', {
@@ -43,12 +48,10 @@ export default function ShopGrid() {
                 setHasMore(data.hasMore);
                 setPage(currentPage);
             }
-        } catch (error) {
-            console.error('Failed to load items:', error);
-        } finally {
-            setLoading(false);
-        }
-    }, [loading, itemsPerPage]); 
+        } 
+        catch (error) { addToast({ message: 'Failed to load items', type: 'error' }); } 
+        finally { setLoading(loadingKey, false); }
+    }, [loading.shopGrid, loading.loadMore]); 
 
     useEffect(() => {
         if (filters && isHydrated) {
@@ -112,10 +115,13 @@ export default function ShopGrid() {
                         ))}
                     </div>
 
-                    {loading && ( <p className="text-center py-8 text-dark">Loading...</p> )}
+                    {loading.shopGrid && <p>Loading...</p>}
 
                     {!loading && hasMore && items.length > 0 && ( 
-                        <div className='text-center py-8'> <Button wd="lg:w-1/3" text="Load More" onClick={loadMore} /> </div>
+                        <div className='text-center py-8'> 
+                            <Button wd="lg:w-1/3" text="Load More" onClick={loadMore} 
+                                disabled={loading.loadMore} loading={loading.loadMore} /> 
+                        </div>
                     )}
 
                     {!loading && !hasMore && items.length > 0 && ( 

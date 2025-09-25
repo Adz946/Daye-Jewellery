@@ -1,6 +1,6 @@
+import { Coins, DollarSign, SortAsc } from 'lucide-react';
 import { FilterHead } from '@/components/filter/FilterHead';
 import TypeSelector from '@/components/filter/TypeSelector';
-import { Coins, DollarSign, SortAsc } from 'lucide-react';
 
 export default function FilterBasic({filters, updaters}) {
     const sortOptions = [

@@ -1,18 +1,20 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { Heart } from 'lucide-react';
 
 import { NavLink } from '../NavLink';
 import { WishlistDropdown } from './WishlistDropdown';
-import { useWishlist } from '@/contexts/WishlistContext';
+import { useWishlist } from '@/contexts/AppProvider';
+import { useDropdowns } from '@/contexts/UIProvider';
 
 export function WishlistIcon({ size = 24, onClick = null, classes = "" }) {
     const { wishlistCount } = useWishlist();
-    const [isOpen, setIsOpen] = useState(false);
+    const { dropdowns, toggleDropdown } = useDropdowns();
     const triggerRef = useRef(null);
+    const isOpen = dropdowns.wishlist;
 
     return (
         <div className="relative">            
-            <NavLink link="#" onClick={onClick || (() => setIsOpen(!isOpen))} ref={triggerRef} classes={classes}> 
+            <NavLink link="#" onClick={onClick || (() => toggleDropdown('wishlist'))} ref={triggerRef} classes={classes}> 
                 <Heart size={size} className="animate hover:text-blue" /> 
 
                 {wishlistCount > 0 && (
@@ -23,7 +25,7 @@ export function WishlistIcon({ size = 24, onClick = null, classes = "" }) {
                 )}
             </NavLink>
 
-            {onClick ? <></> : <WishlistDropdown isOpen={isOpen} onClose={() => setIsOpen(false)} triggerRef={triggerRef} />}
+            {onClick ? <></> : <WishlistDropdown isOpen={isOpen} triggerRef={triggerRef} />}
         </div>
     );
 }
