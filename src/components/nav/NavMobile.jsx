@@ -1,12 +1,11 @@
-// NavMobile.jsx - Simplified with components
 import { useState } from "react";
-import { ChevronDown, Menu, User, Heart, X } from "lucide-react";
+import { ChevronDown, Menu, User, X } from "lucide-react";
 
 import { NavLink } from "./NavLink";
-import { CartIcon } from "./cart/CartIcon";
-import { WishlistIcon } from "./wishlist/WishlistIcon";
 import { useMenu } from "@/hooks/useMenu";
+import { CartIcon } from "./cart/CartIcon";
 import { ContentSwitcher } from "./ContentSwitcher";
+import { WishlistIcon } from "./wishlist/WishlistIcon";
 
 export default function NavMobile() {
     const [isOpen, setIsOpen] = useState(false);

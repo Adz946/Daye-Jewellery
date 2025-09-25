@@ -15,9 +15,7 @@ export function CollectionItem({ item, onSelect, isSelected = false }) {
     const hasDiscount = item.DiscountType && item.DiscountAmount;
     const hasFixedPrice = item.CollectionPrice !== null && item.CollectionPrice !== undefined;
 
-    const handleClick = () => {
-        if (onSelect) { onSelect(item); }
-    };
+    const handleClick = () => { if (onSelect) { onSelect(item); } };
 
     return (
         <div id={item.CollectionID} onClick={handleClick} className={`flex flex-col text-center animate cursor-pointer 

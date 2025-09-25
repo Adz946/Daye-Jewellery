@@ -1,6 +1,6 @@
 import { MenuList } from "./MenuList";
-import { SubMenuContent } from "./SubMenuContent";
 import { CartContent } from "./cart/CartContent";
+import { SubMenuContent } from "./SubMenuContent";
 import { WishlistContent } from "./wishlist/WishlistContent";
 
 export function ContentSwitcher({ content, menuData, currentSubmenu, onContentChange, onSubmenuSelect, onMenuClose }) {

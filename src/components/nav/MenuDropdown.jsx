@@ -1,6 +1,6 @@
 import { NavLink } from "./NavLink";
-import { useFilters } from "@/contexts/FilterContext";
 import { useRouter } from "next/navigation";
+import { useFilters } from "@/contexts/FilterContext";
 
 export function MenuDropdown({ menuItem, isOpen, onClose }) {
     const { navigateWithFilters, navigateToCollection } = useFilters();

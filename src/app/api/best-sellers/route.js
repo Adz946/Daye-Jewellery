@@ -17,29 +17,18 @@ function queryDB(sql, params = []) {
     });
 }
 
-export async function POST(request) {
+export async function GET(request) {
     try {
-        const { collectionID } = await request.json();
-        
-        if (!collectionID) {
-            return Response.json({
-                success: false,
-                error: "CollectionID is required"
-            }, { status: 400 });
-        }
-        
-        const query = `SELECT * FROM vw_CollectionItems WHERE CollectionID = ?`;
-        const collectionItems = await queryDB(query, [collectionID]);
+        const query = `SELECT * FROM vw_BestSellers LIMIT 15`;
+        const bestSellers = await queryDB(query);
         
         return Response.json({
             success: true,
-            collectionID: collectionID,
-            resultCount: collectionItems.length,
-            results: collectionItems
+            results: bestSellers
         });
 
     } catch (error) {
-        console.error("Collection items query failed:", error);
+        console.error("Best sellers query failed:", error);
         return Response.json({
             success: false,
             error: error.message

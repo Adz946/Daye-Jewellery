@@ -59,18 +59,16 @@ function ShopContent() {
     }
 
     return (
-        <main>
-            <section className='px-12'>
-                <CollectionScroller 
-                    onCollectionSelect={handleCollectionSelect} 
-                    selectedCollectionId={selectedCollection?.CollectionID} 
-                />
+        <section className='px-12'>
+            <CollectionScroller 
+                onCollectionSelect={handleCollectionSelect} 
+                selectedCollectionId={selectedCollection?.CollectionID} 
+            />
 
-                {selectedCollection ? 
-                    ( <CollectionGrid collection={selectedCollection} onBack={handleBackToShop} /> ) 
-                    : ( <ShopGrid /> )}
-            </section>
-        </main>
+            {selectedCollection ? 
+                ( <CollectionGrid collection={selectedCollection} onBack={handleBackToShop} /> ) 
+                : ( <ShopGrid /> )}
+        </section>
     );
 }
 

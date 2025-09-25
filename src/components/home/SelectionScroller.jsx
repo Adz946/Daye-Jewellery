@@ -1,42 +1,65 @@
 'use client';
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from 'react';
+
 import { Scroller } from "@/components/Scroller";
 import { ShopItem } from "@/components/ShopItem";
+import { useToasts } from '@/contexts/UIProvider';
+import { CollectionItem } from '../CollectionItem';
+import { cachedFetch } from "@/utils/RequestCache";
 
-export function SelectionScroller({ title }) {
+function addShopItem(key, item) {
+    return (
+        <ShopItem key={key} id={item.JewelleryID} desc={item.Desc} price={item.Price} 
+            salePrice={item.SalePrice} type={item.Type} sizes={item.Sizes} />
+    );
+}
+
+function addCollectionItem(key, item, onSelect) {
+    return ( <CollectionItem key={key} item={item} onSelect={onSelect} /> );
+}
+
+export function SelectionScroller({ title, apiEndpoint, type = "shop" }) {
+    const router = useRouter();
+    const navToShop = (id) => { router.push(`/shop?collection=${id}`); };
+
     const [items, setItems] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasLoaded, setHasLoaded] = useState(false);
 
-    const loadBestSellers = async () => {
-        if (loading) return;      
-        setLoading(true);
+    const { addToast } = useToasts();
+
+    const loadScrollItems = async () => {
+        if (isLoading || hasLoaded) return;
+        setIsLoading(true);
 
         try {
-            const response = await fetch('/api/best-seller-query', {
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            const data = await response.json();
+            const data = await cachedFetch(`/api/${apiEndpoint}`);
+            
             if (data.success) { 
                 setItems(data.results); 
+                setHasLoaded(true);
             }
-        } catch (error) {
-            console.error('Failed to load selection list:', error);
-        } finally {
-            setLoading(false);
-        }
+        } 
+        catch (error) { addToast({ message: `Failed to load ${title}`, type: 'error' }); } 
+        finally { setIsLoading(false);  }
     };
 
-    useEffect(() => { loadBestSellers(); }, []);
+    useEffect(() => { loadScrollItems(); }, [apiEndpoint]);
 
     return (
         <section className="section p-12">
             <Scroller title={title}>
-                {loading ? ( <p>Loading selection list...</p> ) : (
+                {isLoading ? ( 
+                    <div className="flex gap-4">
+                        {[...Array(4)].map((_, i) => (
+                            <div key={i} className="w-64 h-80 bg-gray-200 animate-pulse rounded" />
+                        ))}
+                    </div> 
+                ) : (
                     items.map((item, index) => (
-                        <ShopItem key={`${item.JewelleryID}-${index}`} id={item.JewelleryID} desc={item.Desc} 
-                            price={item.Price} salePrice={item.SalePrice} type={item.Type} sizes={item.Sizes} />
+                        type === "shop" ? addShopItem(`${item.JewelleryID}-${index}`, item) 
+                            : addCollectionItem(`${item.CollectionID}-${index}`, item, (() => navToShop(item.CollectionID)))
                     ))
                 )}
             </Scroller>

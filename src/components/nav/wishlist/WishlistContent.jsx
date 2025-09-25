@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { Heart } from "lucide-react";
+
 import { WishlistItem } from "./WishlistItem";
-import { Button } from "@/components/Button";
-import { useWishlist } from '@/contexts/WishlistContext';
+import { useWishlist } from "@/contexts/AppProvider";
 
 export const WishlistContent = memo(function WishlistContent({ showTitle = false, className = "" }) {
     const { wishlist, removeFromWishlist, wishlistCount } = useWishlist();
@@ -25,17 +25,10 @@ export const WishlistContent = memo(function WishlistContent({ showTitle = false
             )}
             
             <div className="flex-1 overflow-y-auto py-2">
-                {wishlist.map((wishlistItem, index) => (
-                    <WishlistItem 
-                        key={`${wishlistItem.itemId}-${index}`} 
-                        item={wishlistItem}
-                        onRemove={() => removeFromWishlist(wishlistItem.itemId)} 
-                    />
+                {wishlist.map((item, index) => (
+                    <WishlistItem key={`${item.itemId}-${index}`} item={item} 
+                        onRemove={() => removeFromWishlist(item.itemId)} />
                 ))}
-            </div>
-            
-            <div className="pt-4">
-                <Button text="View All" className="w-full" />
             </div>
         </div>
     );
