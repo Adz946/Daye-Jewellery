@@ -1,24 +1,31 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { ChevronRight, RefreshCcw, Shield, Truck } from "lucide-react";
+
 import { Button } from "@/components/Button";
+import Reviews from "@/components/home/Reviews";
 import { useFilters } from "@/contexts/FilterContext";
 import { DisplayItem } from "@/components/DisplayItem";
 import { SelectionScroller } from "@/components/home/SelectionScroller";
-import Reviews from "@/components/home/Reviews";
 
 export default function Home() {
     const router = useRouter();
-    const toShopNow = () => { router.push("/shop"); };
-
     const { presetFilters } = useFilters();
+    const toShopNow = () => { router.push("/shop");  };
 
     return (
-        <main>
+        <>
             {/* HEAD */}
             <section className="stacked h-full text-light font-main">
                 <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
-                    <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover object-center">
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover object-center"
+                    >
                         <source src="/HERO.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
@@ -29,23 +36,54 @@ export default function Home() {
                         <p className="text-xl">NEW ARRIVALS</p>
                         <p className="text-2xl">NOW AVAILABLE</p>
                     </div>
-                    <Button wd="lg:w-1/3" text={"SHOP NOW"} onClick={toShopNow} />
+                    <Button
+                        wd="w-full lg:w-1/3"
+                        text={"SHOP NOW"}
+                        onClick={toShopNow}
+                    />
+                </div>
+            </section>
+
+            <section className="w-full py-12 bg-light/30">
+                <div className="flex gap-8 md:gap-16 flex-col md:flex-row justify-center items-center text-center">
+                    <div className="flex flex-col items-center gap-2">
+                        <Shield size={64} />
+                        <p className="text-md font-semibold">Lifetime Warranty</p>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                        <Truck size={64} />
+                        <p className="text-md font-semibold">Free Shipping Over $150</p>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                        <RefreshCcw size={64} />
+                        <p className="text-md font-semibold">30-Day Returns</p>
+                    </div>
                 </div>
             </section>
 
             {/* TYPE SELECT */}
             <section className="w-full p-4 lg:p-12 md:p-6 flex flex-col gap-4 md:gap-8">
                 <div className="w-full gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-                    <DisplayItem title="NECKLACE" text="Necklaces" onClick={presetFilters.filterNecklaces} />
-                    <DisplayItem title="BRACELET" text="Bracelets" onClick={presetFilters.filterBracelets} />
-                    <DisplayItem title="RING" text="Rings" onClick={presetFilters.filterRings} />
-                    <DisplayItem title="EARRING" text="Earrings" onClick={presetFilters.filterEarrings} />
-                </div>
-
-                <div className="w-full gap-4 lg:gap-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    <DisplayItem title="COLLECTION" text="Shop By Collection" />
-                    <DisplayItem title="BEST" text="Shop By Best Sellers" />
-                    <DisplayItem title="ITEM" text="Shop By... Other?" />
+                    <DisplayItem
+                        title="NECKLACE"
+                        text="Necklaces"
+                        onClick={presetFilters.filterNecklaces}
+                    />
+                    <DisplayItem
+                        title="BRACELET"
+                        text="Bracelets"
+                        onClick={presetFilters.filterBracelets}
+                    />
+                    <DisplayItem
+                        title="RING"
+                        text="Rings"
+                        onClick={presetFilters.filterRings}
+                    />
+                    <DisplayItem
+                        title="EARRING"
+                        text="Earrings"
+                        onClick={presetFilters.filterEarrings}
+                    />
                 </div>
             </section>
 
@@ -73,12 +111,50 @@ export default function Home() {
                         <br />
                         Ready to elevate your look?
                     </p>
-                    <Button wd="lg:w-1/3" text={"SHOP NOW"} onClick={toShopNow} />
+                    <Button
+                        wd="w-full lg:w-1/3"
+                        text={"SHOP NOW"}
+                        onClick={toShopNow}
+                    />
                 </div>
             </section>
 
-            <SelectionScroller title="BEST SELLERS" />
+            <SelectionScroller title="BEST SELLERS" apiEndpoint="best-sellers" />
+
+            <section className="relative aspect-[12/10] w-full md:aspect-auto md:h-screen">
+                <picture>
+                    <source
+                        media="(max-width: 768px)"
+                        srcSet="/UNIQUE_PLACEHOLDER_MOBILE.jpg"
+                    />
+                    <img
+                        src="/UNIQUE_PLACEHOLDER.jpg"
+                        className="w-full h-full object-cover"
+                        alt=""
+                    />
+                </picture>
+
+                <div className="absolute inset-0 flex items-end md:items-center md:justify-end p-6 md:p-30">
+                    <div className="bg-white/80 md:bg-transparent rounded-xl p-4 md:p-0 w-full md:w-1/3 text-center md:text-left">
+                        <h3 className="font-main font-bold text-xl">
+                            The Ultimate Symbol Of Power
+                        </h3>
+                        <p className="font-main mt-2">
+                            Forged in fire. Enduring in form. An engagement ring
+                            that commands presence beyond time.
+                        </p>
+                        <a
+                            href="#"
+                            className="font-main font-semibold mt-4 flex items-center justify-center md:justify-start"
+                        >
+                            Discover More <ChevronRight />
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <SelectionScroller title="OUR COLLECTIONS" type="collections" apiEndpoint="collections" />
             <Reviews />
-        </main>
+        </>
     );
 }
