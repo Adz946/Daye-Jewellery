@@ -68,35 +68,35 @@ export const CartItem = memo(function CartItem({ item, onRemove = null, onUpdate
             <div className="flex items-center justify-between">
                 {/* Quantity Controls - Larger touch targets */}
                 <div className="flex items-center gap-3">
-                <div className="flex items-center border border-dark/20 rounded overflow-hidden">
-                    <button
-                        onClick={decrementQuantity}
-                        className="p-2 hover:bg-dark/5 transition-colors"
-                        aria-label="Decrease quantity"
-                        disabled={item.quantity <= 1}
-                    >
-                        <Minus size={14} className={item.quantity <= 1 ? "text-dark/30" : "text-dark"} />
-                    </button>
-                    
-                    <input
-                        type="text"
-                        value={inputValue}
-                        onChange={handleInputChange}
-                        onBlur={handleInputBlur}
-                        className="w-12 text-center text-sm border-0 focus:outline-none focus:bg-dark/5"
-                        min="1"
-                        aria-label="Quantity"
-                    />
-                    
-                    <button
-                        onClick={incrementQuantity}
-                        className="p-2 hover:bg-dark/5 transition-colors"
-                        aria-label="Increase quantity"
-                    >
-                        <Plus size={14} className="text-dark" />
-                    </button>
+                    <div className="flex items-center border border-dark/20 rounded overflow-hidden">
+                        <button
+                            onClick={decrementQuantity}
+                            className="p-2 hover:bg-dark/5 transition-colors"
+                            aria-label="Decrease quantity"
+                            disabled={item.quantity <= 1}
+                        >
+                            <Minus size={14} className={item.quantity <= 1 ? "text-dark/30" : "text-dark"} />
+                        </button>
+                        
+                        <input
+                            type="text"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            onBlur={handleInputBlur}
+                            className="w-12 text-center text-sm border-0 focus:outline-none focus:bg-dark/5"
+                            min="1"
+                            aria-label="Quantity"
+                        />
+                        
+                        <button
+                            onClick={incrementQuantity}
+                            className="p-2 hover:bg-dark/5 transition-colors"
+                            aria-label="Increase quantity"
+                        >
+                            <Plus size={14} className="text-dark" />
+                        </button>
+                    </div>
                 </div>
-            </div>
 
                 {/* Price Display - Prominent */}
                 <div className="text-right">

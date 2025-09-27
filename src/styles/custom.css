@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
+button { @apply cursor-pointer; }
+
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--light); }
