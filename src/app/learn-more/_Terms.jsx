@@ -1,57 +1,40 @@
 "use client";
 
 const headers = [
-    ["terms-title", "Terms and Conditions"],
-    ["general", "General Information"],
-    ["eligibility", "Eligibility"],
-    ["orders", "Orders and Payment"],
-    ["shipping", "Shipping and Delivery"],
-    ["returns", "Returns and Exchanges"],
-    ["product", "Product Information"],
-    ["ip", "Intellectual Property"],
-    ["privacy", "Privacy"],
-    ["liability", "Limitation of Liability"],
-    ["changes", "Changes to Terms"],
-    ["contact", "Contact Us"],
+  ["general", "General Information"],
+  ["eligibility", "Eligibility"],
+  ["orders", "Orders and Payment"],
+  ["shipping", "Shipping and Delivery"],
+  ["returns", "Returns and Exchanges"],
+  ["product", "Product Information"],
+  ["ip", "Intellectual Property"],
+  ["privacy", "Privacy"],
+  ["liability", "Limitation of Liability"],
+  ["changes", "Changes to Terms"],
+  ["contact", "Contact Us"],
 ];
 
-function headerNav() {
+function HeaderNav() {
     return (
-        <div className="w-1/4 h-full p-4 bg-light rounded-lg">
-            <h2 className="mb-4 p-2 text-xl font-title font-bold border-b-2 border-dark">
-                Quick Links
-            </h2>
-
+        <nav className="w-full lg:w-1/4 h-full p-4 bg-light rounded-lg" aria-label="Quick links">
+            <h2 className="mb-4 p-2 text-xl font-title font-bold border-b-2 border-dark">Quick Links</h2>
             <ul className="w-full gap-4 flex flex-col list-disc">
                 {headers.map((h) => (
-                    <a
-                        key={h[0]}
-                        className="w-full text-dark p-2 underline"
-                        href={`#${h[0]}`}
-                    >
+                    <a key={h[0]} className="w-full text-dark p-2 underline" href={`#${h[0]}`}>
                         {h[1]}
                     </a>
                 ))}
             </ul>
-        </div>
+        </nav>
     );
 }
 
-export default function TermsAndConditionsPage() {
+export default function TermsPolicy() {
     return (
-        <section className="w-full mx-auto p-5 gap-5 text-dark flex">
-            {headerNav()}
-
-            <section className="w-3/4 flex flex-col px-8 gap-6 leading-relaxed">
-                <div className="border-b-2 border-dark pb-4">
-                    <h1
-                        id="terms-title"
-                        className="text-2xl md:text-3xl font-title font-bold text-center"
-                    >
-                        Terms and Conditions
-                    </h1>
-                </div>
-
+        <section className="w-full mx-auto p-5 gap-5 text-dark flex flex-col lg:flex-row">
+            <HeaderNav />
+            
+            <section className="w-full lg:w-3/4 flex flex-col px-8 gap-6 leading-relaxed">
                 <p>
                     The terms and conditions govern your use of Daye Jewellery's
                     website and purchase of goods for our team. By using our

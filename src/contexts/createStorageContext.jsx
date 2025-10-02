@@ -27,6 +27,10 @@ export function createStorageContext(config) {
             return operations.total ? operations.total(items) : 0;
         }, [items]);
 
+        useEffect(() => {
+            console.log(`[${contextName}Provider] mounted`);
+        }, []);
+
         // Load from storage on mount
         useEffect(() => {
             setIsHydrated(true);

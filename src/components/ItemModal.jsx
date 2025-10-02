@@ -75,7 +75,7 @@ export function ItemModal({ isOpen, item, closeModal, onSuccess }) {
         
         try {
             const currentPrice = isOnSale ? item.salePrice : item.price;
-            addToCart(item.id, item.desc, currentPrice, selectedSize || 'N/A', quantity);
+            addToCart(item.id, item.desc, item.type, currentPrice, selectedSize || 'N/A', quantity);
 
             setLoading('cartSuccess', true);
             setLoading('addToCart', false);

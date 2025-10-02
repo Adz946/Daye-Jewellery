@@ -1,4 +1,3 @@
-// components/FAQ.js
 "use client";
 import { Accordion, AccordionItem } from "@szhsin/react-accordion";
 import { ChevronDown } from "lucide-react";
@@ -72,66 +71,58 @@ const items = [
 ];
 
 const sectionTitles = {
-    ordering: "Ordering",
-    shipping: "Shipping and Delivery",
-    materials: "Jewellery Materials and Care",
-    returns: "Returns and Exchanges",
-    warranty: "Warranty and Repairs",
-    payment: "Payment",
+  ordering: "Ordering",
+  shipping: "Shipping and Delivery",
+  materials: "Jewellery Materials and Care",
+  returns: "Returns and Exchanges",
+  warranty: "Warranty and Repairs",
+  payment: "Payment",
 };
 
-export default function FAQ() {
-    // group items by type
-    const grouped = items.reduce((acc, item) => {
-        acc[item.type] = acc[item.type] || [];
-        acc[item.type].push(item);
-        return acc;
-    }, {});
+export default function FAQs() {
+  const grouped = items.reduce((acc, item) => {
+    acc[item.type] = acc[item.type] || [];
+    acc[item.type].push(item);
+    return acc;
+  }, {});
 
-    return (
-        <div className="flex flex-col w-full items-center justify-center">
-            <h2 className="text-xl sm:text-2xl font-title text-dark border-b-2 border-dark/20 pb-2 mb-6">
-                Frequently Asked Questions
-            </h2>
-
-            <div className="flex flex-col w-full max-w-3xl space-y-8">
-                {Object.keys(grouped).map((type) => (
-                    <div key={type}>
-                        <h3 className="text-lg sm:text-xl font-semibold text-dark border-b border-dark/20 pb-2 mb-4">
-                            {sectionTitles[type]}
-                        </h3>
-
-                        <Accordion className="flex flex-col gap-3 w-full">
-                            {grouped[type].map((faq, idx) => (
-                                <AccordionItem
-                                    key={idx}
-                                    header={({ state }) => (
-                                        <div
-                                            className="flex w-full items-center justify-between 
+  return (
+    <div className="flex flex-col w-full items-center justify-center">
+      <div className="flex flex-col w-full max-w-3xl space-y-8">
+        {Object.keys(grouped).map((type) => (
+          <div key={type}>
+            <h3 className="text-lg sm:text-xl font-semibold text-dark border-b border-dark/20 pb-2 mb-4">
+              {sectionTitles[type]}
+            </h3>
+            <Accordion className="flex flex-col gap-3 w-full">
+              {grouped[type].map((faq, idx) => (
+                <AccordionItem
+                  key={idx}
+                  header={({ state }) => (
+                    <div
+                      className="flex w-full items-center justify-between 
                                  text-left text-dark font-semibold rounded-md
                                  px-4 py-3 cursor-pointer
                                  hover:bg-dark hover:text-light transition-all"
-                                        >
-                                            <span>{faq.question}</span>
-                                            <ChevronDown
-                                                className={`transition-transform duration-300 ${
-                                                    state?.isEnter
-                                                        ? "rotate-180"
-                                                        : ""
-                                                }`}
-                                            />
-                                        </div>
-                                    )}
-                                >
-                                    <div className="faq-answer px-4 py-3 font-light">
-                                        {faq.answer}
-                                    </div>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
+                    >
+                      <span>{faq.question}</span>
+                      <ChevronDown
+                        className={`transition-transform duration-300 ${
+                          state?.isEnter ? "rotate-180" : ""
+                        }`}
+                      />
                     </div>
-                ))}
-            </div>
-        </div>
-    );
+                  )}
+                >
+                  <div className="faq-answer px-4 py-3 font-light">
+                    {faq.answer}
+                  </div>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
