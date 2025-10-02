@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { useRouter } from "next/navigation";
 import { ShoppingBag } from "lucide-react";
 
 import { CartItem } from "./CartItem";
@@ -6,6 +7,8 @@ import { Button } from "@/components/Button";
 import { useCart } from "@/contexts/AppProvider";
 
 export const CartContent = memo(function CartContent({ showTitle = false, className = "" }) {
+    const router = useRouter();
+    const toCheckout = () => { router.push("/checkout"); };
     const { cart, removeFromCart, cartCount, cartTotal, updateQuantity } = useCart();
 
     if (cart.length === 0) {
@@ -40,7 +43,7 @@ export const CartContent = memo(function CartContent({ showTitle = false, classN
                 <p className="text-center">
                     Total: <span className="font-semibold">${cartTotal.toFixed(2)}</span>
                 </p>
-                <Button text="Checkout" className="w-full" />
+                <Button text="Checkout" onClick={toCheckout} className="w-full" />
             </div>
         </div>
     );
