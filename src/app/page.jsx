@@ -12,13 +12,15 @@ import { SelectionScroller } from "@/components/home/SelectionScroller";
 export default function Home() {
     const router = useRouter();
     const { presetFilters } = useFilters();
-    const toShopNow = () => { router.push("/shop");  };
+    const toShopNow = () => {
+        router.push("/shop");
+    };
 
     return (
         <>
-            {/* HEAD */}
-            <section className="stacked h-full text-light font-main">
-                <div className="relative aspect-[12/10] md:aspect-auto md:h-screen">
+            {/** HERO */}
+            <section className="stacked h-screen text-light font-main">
+                <div className="relative h-screen">
                     <video
                         autoPlay
                         loop
@@ -31,14 +33,14 @@ export default function Home() {
                     </video>
                 </div>
 
-                <div className="w-full h-full z-50 gap-5 p-15 bg-black/20 flex flex-col text-center items-center justify-end">
+                <div className="absolute inset-0 z-50 flex flex-col items-center justify-end pb-20 gap-5 bg-black/20 text-center">
                     <div className="flex flex-col gap-2 font-bold">
                         <p className="text-xl">NEW ARRIVALS</p>
                         <p className="text-2xl">NOW AVAILABLE</p>
                     </div>
                     <Button
-                        wd="w-full lg:w-1/3"
-                        text={"SHOP NOW"}
+                        wd="w-2/3 sm:w-1/3 lg:w-1/4"
+                        text="SHOP NOW"
                         onClick={toShopNow}
                     />
                 </div>
@@ -48,11 +50,15 @@ export default function Home() {
                 <div className="flex gap-8 md:gap-16 flex-col md:flex-row justify-center items-center text-center">
                     <div className="flex flex-col items-center gap-2">
                         <Shield size={64} />
-                        <p className="text-md font-semibold">Lifetime Warranty</p>
+                        <p className="text-md font-semibold">
+                            Lifetime Warranty
+                        </p>
                     </div>
                     <div className="flex flex-col items-center gap-2">
                         <Truck size={64} />
-                        <p className="text-md font-semibold">Free Shipping Over $150</p>
+                        <p className="text-md font-semibold">
+                            Free Shipping Over $150
+                        </p>
                     </div>
                     <div className="flex flex-col items-center gap-2">
                         <RefreshCcw size={64} />
@@ -119,7 +125,10 @@ export default function Home() {
                 </div>
             </section>
 
-            <SelectionScroller title="BEST SELLERS" apiEndpoint="best-sellers" />
+            <SelectionScroller
+                title="BEST SELLERS"
+                apiEndpoint="best-sellers"
+            />
 
             <section className="relative aspect-[12/10] w-full md:aspect-auto md:h-screen">
                 <picture>
@@ -153,7 +162,11 @@ export default function Home() {
                 </div>
             </section>
 
-            <SelectionScroller title="OUR COLLECTIONS" type="collections" apiEndpoint="collections" />
+            <SelectionScroller
+                title="OUR COLLECTIONS"
+                type="collections"
+                apiEndpoint="collections"
+            />
             <Reviews />
         </>
     );
