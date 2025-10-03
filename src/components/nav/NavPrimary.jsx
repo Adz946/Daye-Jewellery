@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, User, ChevronDown } from "lucide-react";
 
 import { NavLink } from "./NavLink";
@@ -6,11 +6,13 @@ import { MenuItem } from "./MenuItem";
 import { useMenu } from "@/hooks/useMenu";
 import { CartIcon } from "./cart/CartIcon";
 import { MenuDropdown } from "./MenuDropdown";
+import { usePathname } from "next/navigation";
 import { useFilters } from "@/contexts/FilterContext";
 import { WishlistIcon } from "./wishlist/WishlistIcon";
 import { useDropdowns, useLoading, useToasts } from "@/contexts/UIProvider";
 
 export default function NavPrimary() {
+    const pathname = usePathname();
     const [query, setQuery] = useState("");
     const { navigateWithFilters } = useFilters();
 
@@ -18,6 +20,11 @@ export default function NavPrimary() {
     const { loading, setLoading } = useLoading();
     const { addToast } = useToasts();
     const { menuData, loading: menuLoading, error } = useMenu();
+
+    useEffect(() => {
+        setQuery("");
+        closeAllDropdowns();
+    }, [pathname]);
 
     if (menuLoading) return <nav className="flex px-12 py-4 justify-between">Loading...</nav>;
     if (error) return <nav className="flex px-12 py-4 justify-between">Error loading menu</nav>;
@@ -30,18 +37,10 @@ export default function NavPrimary() {
         try {
             await navigateWithFilters({ search: query.trim() }, true);
             setQuery("");
-            addToast({ 
-                message: 'Search completed', 
-                type: 'success',
-                duration: 2000 
-            });
+            addToast({ message: 'Search completed', type: 'success' });
         } catch (error) {
             console.error('Search failed:', error);
-            addToast({ 
-                message: 'Search failed. Please try again.', 
-                type: 'error',
-                duration: 4000 
-            });
+            addToast({ message: 'Search failed. Please try again.', type: 'error' });
         } finally {
             setLoading('search', false);
         }

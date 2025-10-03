@@ -24,3 +24,11 @@ body {
     color: var(--dark);
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.szh-accordion__item-btn {
+    width: 100%;
+    text-align: left; /* keeps the text aligned left */
+    padding: 0; /* let your inner div handle padding */
+    background: transparent;
+    border: none;
+}

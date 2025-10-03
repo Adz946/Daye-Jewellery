@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Search, Filter, X } from 'lucide-react';
 
-import { Button } from './Button';
+import { Button } from '../Button';
 import FilterBar from './FilterBar';
 import { ShopItem } from './ShopItem';
-import { Toggle } from './filter/Toggle';
+import { Toggle } from '../filter/Toggle';
 import { cachedFetch } from "@/utils/RequestCache";
 import { useFilters } from '@/contexts/FilterContext';
 import { useToasts, useLoading } from '@/contexts/UIProvider';
@@ -21,13 +21,12 @@ export default function ShopGrid() {
     const { filters, filterUpdaters, isHydrated } = useFilters();
     const itemsPerPage = 20;
 
-    const loadItems = useCallback(async (currentPage = 0, clearGrid = false, filtersToUse = null) => {
+    const loadItems = useCallback(async (loadingKey = "shopGrid", currentPage = 0, clearGrid = false, filtersToUse = null) => {
         if (loading.shopGrid || loading.loadMore) return;
         
         const activeFilters = filtersToUse || filters;
         if (!activeFilters) return;
         
-        const loadingKey = clearGrid ? 'shopGrid' : 'loadMore';
         setLoading(loadingKey, true);
         
         try {
@@ -54,15 +53,13 @@ export default function ShopGrid() {
             setItems([]);
             setPage(0);
             setHasMore(true);
-            loadItems(0, true, filters); 
+            loadItems("shopGrid", 0, true, filters); 
         }
     }, [filters, isHydrated]);
 
     // Load more items
     const loadMore = useCallback(() => {
-        if (!loading && hasMore) { 
-            loadItems(page + 1, false, filters);
-        }
+        if (!loading.loadMore && hasMore) { loadItems("loadMore", page + 1, false, filters); }
     }, [loading, hasMore, page, loadItems, filters]);
 
     if (!isHydrated || !filters) return <div>Loading...</div>;
@@ -103,7 +100,7 @@ export default function ShopGrid() {
             <div className='w-full h-7/8 lg:flex lg:flex-row'>
                 <FilterBar classes="hidden w-1/4 xl:flex flex-col rounded-sm shadow-inner-custom" filters={filters} updaters={filterUpdaters} />
 
-                <div className='xl:w-3/4 lg:p-8 overflow-y-auto'>
+                <div className='xl:w-3/4 max-h-full p-8 overflow-y-auto'>
                     <div className="w-full gap-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {items.map((item, index) => (
                             <ShopItem key={`${item.JewelleryID}-${index}`} id={item.JewelleryID} desc={item.Desc} 

@@ -25,11 +25,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en">
+		<html lang="en" className="scroll-smooth scroll-p-[120px]">
 			<body className={`${montserrat.variable} ${sofiaSans.variable} antialiased min-h-screen flex flex-col`}>
 				<Suspense fallback={
 					<div className="w-full h-dvh flex flex-col items-center justify-center text-center text-bold">
-						<h1 className="text-3xl">Loading Content....</h1>
+						<h1 className="text-3xl">Loading Content</h1>
 						<p className="text-lg">Please Be Patient</p>
 					</div>
 				}>

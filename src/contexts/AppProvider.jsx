@@ -11,7 +11,7 @@ const cartConfig = {
     operations: {
         count: (items) => items.reduce((total, item) => total + item.quantity, 0),
         total: (items) => items.reduce((total, item) => total + (item.price * item.quantity), 0),
-        add: (prev, { itemId, desc, price, size, quantity = 1 }) => {
+        add: (prev, { itemId, desc, type, price, size, quantity = 1 }) => {
             const existingIndex = prev.findIndex(item => item.itemId === itemId && item.size === size);
             if (existingIndex >= 0) {
                 return prev.map((item, index) => 
@@ -20,12 +20,12 @@ const cartConfig = {
                         : item
                 );
             }
-            return [...prev, { itemId, desc, price, size, quantity, addedAt: Date.now() }];
+            return [...prev, { itemId, desc, type, price, size, quantity, addedAt: Date.now() }];
         },
         remove: (prev, { itemId, size }) => prev.filter(item => !(item.itemId === itemId && item.size === size)),
         custom: {
-            addToCart: (items, { add }) => (itemId, desc, price, size, quantity = 1) => {
-                add({ itemId, desc, price, size, quantity });
+            addToCart: (items, { add }) => (itemId, desc, type, price, size, quantity = 1) => {
+                add({ itemId, desc, type, price, size, quantity });
             },
             removeFromCart: (items, { remove }) => (itemId, size) => {
                 remove({ itemId, size });

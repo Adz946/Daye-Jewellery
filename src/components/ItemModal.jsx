@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { createPortal } from 'react-dom';
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { X, Plus, Minus, Heart, ShoppingBag, Check } from 'lucide-react';
+import { X, Plus, Minus, Heart, ShoppingBag } from 'lucide-react';
 
-import { SelectButton } from './filter/SelectButton';
+import { SelectButton } from "./filter/SelectButton";
 import { useToasts, useLoading } from "@/contexts/UIProvider";
 import { useCart, useWishlist } from "@/contexts/AppProvider";
 
@@ -75,7 +75,7 @@ export function ItemModal({ isOpen, item, closeModal, onSuccess }) {
         
         try {
             const currentPrice = isOnSale ? item.salePrice : item.price;
-            addToCart(item.id, item.desc, currentPrice, selectedSize || 'N/A', quantity);
+            addToCart(item.id, item.desc, item.type, currentPrice, selectedSize || 'N/A', quantity);
 
             setLoading('cartSuccess', true);
             setLoading('addToCart', false);

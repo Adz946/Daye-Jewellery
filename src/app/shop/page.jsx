@@ -1,13 +1,13 @@
 'use client';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { fetchCollectionById } from '@/utils/CollectionsUtil';
 
-import ShopGrid from "@/components/ShopGrid";
-import CollectionGrid from '@/components/CollectionGrid';
-import CollectionScroller from "@/components/CollectionScroller";
+import ShopGrid from '@/components/shop/ShopGrid';
+import CollectionGrid from '@/components/shop/CollectionGrid';
+import CollectionScroller from '@/components/CollectionScroller';
 
-function ShopContent() {
+export default function Shop() {
     const [selectedCollection, setSelectedCollection] = useState(null);
     const [loading, setLoading] = useState(false);
     const searchParams = useSearchParams();
@@ -69,19 +69,5 @@ function ShopContent() {
                 ( <CollectionGrid collection={selectedCollection} onBack={handleBackToShop} /> ) 
                 : ( <ShopGrid /> )}
         </section>
-    );
-}
-
-export default function Shop() {
-    return (
-        <Suspense fallback={
-            <main>
-                <section className='px-12'>
-                    <div className="text-center py-8">Loading shop...</div>
-                </section>
-            </main>
-        }>
-            <ShopContent />
-        </Suspense>
     );
 }

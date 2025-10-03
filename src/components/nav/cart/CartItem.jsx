@@ -46,7 +46,7 @@ export const CartItem = memo(function CartItem({ item, onRemove = null, onUpdate
     }, [item.quantity, handleQuantityChange]);
 
     return (
-        <div className="p-5 border-b border-dark/10">
+        <div className="p-4">
             {/* Product Header - Clean and spacious */}
             <div className="flex justify-between items-start mb-4">
                 <div className="flex-1 pr-3">

@@ -24,7 +24,7 @@ export const WishlistContent = memo(function WishlistContent({ showTitle = false
                 </div>
             )}
             
-            <div className="flex-1 overflow-y-auto py-2">
+            <div className="p-2 flex-1 overflow-y-auto divide-y divide-dark/10">
                 {wishlist.map((item, index) => (
                     <WishlistItem key={`${item.itemId}-${index}`} item={item} 
                         onRemove={() => removeFromWishlist(item.itemId)} />
