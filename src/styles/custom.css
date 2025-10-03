@@ -21,3 +21,16 @@ button { @apply cursor-pointer; }
 
 /* ANIMATE */
 .animate { @apply transform transition-all duration-700 ease-out; }
+
+.animate-slide-in { @apply animate-[slideIn_0.5s_ease-out]; }
+.animate-slide-out { @apply animate-[slideOut_0.5s_ease-in]; }
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}

@@ -16,22 +16,22 @@ export const WishlistItem = memo(function WishlistItem({ item, onRemove = null }
     };
 
     return (
-        <div className="p-4 border-b border-dark/10">
-            <h4 className="font-medium text-sm text-dark pb-2">{item.desc}</h4>
+        <div className="p-4">
+            <h4 className="font-medium text-dark leading-relaxed mb-2">{item.desc}</h4>
 
             <div className="flex gap-2 items-center">
                 <div className="flex-1">
-                    <p className="font-bold text-sm">${item.price}</p>
+                    <p className="text-lg font-bold text-dark">${item.price}</p>
                 </div>
 
                 <div className="flex gap-2">
                     <button onClick={handleMoveToCart} aria-label="Select size & add to cart"
                         title="Select size & add to cart" className="text-dark hover:text-blue"> 
-                        <ShoppingBag size={18} /> 
+                        <ShoppingBag size={20} /> 
                     </button>
                     
                     <button onClick={onRemove} aria-label="Remove item" className="text-dark hover:text-red"> 
-                        <Trash2 size={18} /> 
+                        <Trash2 size={20} /> 
                     </button>
                 </div>
             </div>

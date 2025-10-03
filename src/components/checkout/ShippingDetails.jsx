@@ -1,31 +1,21 @@
 import { useState } from "react";
 
+import { Button } from "../Button";
 import AddressField from "./AddressField";
+import { useToasts } from "@/contexts/UIProvider";
 import { allCountries } from "country-region-data";
 import { useAddressValidation } from "@/hooks/useAddressValidation";
 
-const initial = {
-  fullName: "",
-  street: "",
-  city: "",
-  country: "",
-  state: "",
-  zip: "",
-};
-
-export default function ShippingDetails({ value, onChange }) {
-	const [address, setAddress] = useState(value || initial);
+export default function ShippingDetails({ shipping, onChange }) {
+	const { addToast } = useToasts(); 
 	const [touched, setTouched] = useState({});
 	const [showErrors, setShowErrors] = useState(false);
 
-	const { regions, validateAddress } = useAddressValidation(address);
+	const { regions, validateAddress } = useAddressValidation(shipping);
 
 	function handleChange(e) {
 		const { name, value } = e.target;
-		let updated = { ...address, [name]: value };
-		if (name === "country") updated.state = "";
-		setAddress(updated);
-		if (onChange) onChange(updated);
+		onChange(name, value);
 	}
 
 	function handleBlur(e) { setTouched(prev => ({ ...prev, [e.target.name]: true })); }
@@ -44,10 +34,11 @@ export default function ShippingDetails({ value, onChange }) {
 		});
 
 		if (isValid && onChange) {
-			onChange(address);
-			alert("Address confirmed!");
+			onChange(shipping);
+			addToast({ message: "Address confirmed successfully!", type: 'success' });
 		} else {
-			alert("Error: ", errors);
+			const errorMessages = Object.values(errors).filter(Boolean);
+            addToast({ message: `Address validation failed: ${errorMessages.join(', ')}`, type: 'error' });
 		}
 	}
 
@@ -61,31 +52,31 @@ export default function ShippingDetails({ value, onChange }) {
 		value: region[1] || region[0], label: region[0] }));
 
 	return (
-		<div className="bg-white rounded-lg shadow p-6 mb-8">
-			<h2 className="text-xl font-semibold mb-4">Shipping Address</h2>
+		<div className="bg-white p-4 gap-8 flex flex-col items-center rounded-lg shadow">
+			<h2 className="text-xl font-semibold self-start">Shipping Details</h2>
 			
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-			<AddressField label="Full Name" name="fullName" value={address.fullName} onChange={handleChange} 
-				onBlur={handleBlur} error={getFieldError('fullName')} required />
-			
-			<AddressField label="Street Address" name="street" value={address.street} onChange={handleChange} 
-				onBlur={handleBlur} error={getFieldError('street')} required />
-			
-			<AddressField label="City" name="city" value={address.city} onChange={handleChange} onBlur={handleBlur} 
-				error={getFieldError('city')} required />
-			
-			<AddressField label="Country" name="country" type="select" value={address.country} onChange={handleChange} 
-				onBlur={handleBlur} error={getFieldError('country')} options={countryOptions} />
-			
-			<AddressField label="State/Province" name="state" type={regions.length > 0 ? "select" : "text"} 
-				value={address.state} onChange={handleChange} onBlur={handleBlur} error={getFieldError('state')} 
-				options={regionOptions} disabled={regions.length === 0} placeholder={regions.length === 0 ? "N/A" : ""} />
-			
-			<AddressField label="Postal Code" name="zip" value={address.zip} onChange={handleChange} onBlur={handleBlur} 
-				error={getFieldError('zip')} required />
+				<AddressField label="Full Name" name="fullName" value={shipping.fullName} onChange={handleChange} 
+					onBlur={handleBlur} error={getFieldError('fullName')} required />
+				
+				<AddressField label="Street Address" name="street" value={shipping.street} onChange={handleChange} 
+					onBlur={handleBlur} error={getFieldError('street')} required />
+				
+				<AddressField label="City" name="city" value={shipping.city} onChange={handleChange} onBlur={handleBlur} 
+					error={getFieldError('city')} required />
+				
+				<AddressField label="Country" name="country" type="select" value={shipping.country} onChange={handleChange} 
+					onBlur={handleBlur} error={getFieldError('country')} options={countryOptions} />
+				
+				<AddressField label="State/Province" name="state" type={regions.length > 0 ? "select" : "text"} 
+					value={shipping.state} onChange={handleChange} onBlur={handleBlur} error={getFieldError('state')} 
+					options={regionOptions} disabled={regions.length === 0} placeholder={regions.length === 0 ? "N/A" : ""} />
+				
+				<AddressField label="ZIP / Post Code" name="zip" value={shipping.zip} onChange={handleChange} onBlur={handleBlur} 
+					error={getFieldError('zip')} required />
 			</div>
 			
-			<button type="button" onClick={handleConfirm} className="btn btn-primary mt-6"> Confirm Address </button>
+			<Button text="Confirm Address" onClick={handleConfirm} className="w-full lg:w-1/2" />
 		</div>
 	);
 }

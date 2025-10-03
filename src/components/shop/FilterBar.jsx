@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import FilterGem from './filter/FilterGem';
-import FilterBasic from './filter/FilterBasic';
-import FilterMaterial from './filter/FilterMaterial';
+
+import FilterGem from '../filter/FilterGem';
+import FilterBasic from '../filter/FilterBasic';
+import FilterMaterial from '../filter/FilterMaterial';
 
 function getFilters(filterType, filters, updaters) {
     switch (filterType) {

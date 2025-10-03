@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Scroller } from "@/components/Scroller";
 
 import { cachedFetch } from "@/utils/RequestCache";
-import { CollectionItem } from "@/components/CollectionItem";
+import { CollectionItem } from './shop/CollectionItem';
 import { useLoading, useToasts } from '@/contexts/UIProvider';
 
 export default function CollectionScroller({ onCollectionSelect, selectedCollectionId = null }) {

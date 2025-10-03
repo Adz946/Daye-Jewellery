@@ -13,7 +13,7 @@ export function WishlistDropdown({ isOpen, triggerRef }) {
     if (!isOpen) return null;
 
     return (
-        <div ref={dropdownRef} className="absolute right-0 top-10 w-80 bg-white border 
+        <div ref={dropdownRef} className="absolute right-0 top-10 w-90 bg-white border 
             border-dark/10 rounded-lg shadow-lg z-500">
             
             <div className="h-16 flex justify-between items-center p-4 border-b border-dark/10">
@@ -23,7 +23,7 @@ export function WishlistDropdown({ isOpen, triggerRef }) {
                 </button>
             </div>
 
-            <div className="h-86">
+            <div className="h-96">
                 <WishlistContent className="h-full px-4 py-2" />
             </div>
         </div>

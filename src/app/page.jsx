@@ -6,7 +6,7 @@ import { ChevronRight, RefreshCcw, Shield, Truck } from "lucide-react";
 import { Button } from "@/components/Button";
 import Reviews from "@/components/home/Reviews";
 import { useFilters } from "@/contexts/FilterContext";
-import { DisplayItem } from "@/components/DisplayItem";
+import { DisplayItem } from "@/components/home/DisplayItem";
 import { SelectionScroller } from "@/components/home/SelectionScroller";
 
 export default function Home() {
