@@ -2,11 +2,11 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-import { Scroller } from "@/components/Scroller";
-import { ShopItem } from "@/components/ShopItem";
+import { Scroller } from "../Scroller";
+import { ShopItem } from "../shop/ShopItem";
 import { useToasts } from "@/contexts/UIProvider";
-import { CollectionItem } from "../CollectionItem";
 import { cachedFetch } from "@/utils/RequestCache";
+import { CollectionItem } from "../shop/CollectionItem";
 
 function addShopItem(key, item) {
     return (

@@ -73,7 +73,6 @@ const { Provider: WishlistProvider, useHook: useWishlist } = createStorageContex
 
 // Unified App Provider
 export function AppProvider({ children }) {
-    console.log("AppProvider mounted");
     return (
         <CartProvider>
             <WishlistProvider>

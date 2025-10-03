@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { fetchCollectionById } from '@/utils/CollectionsUtil';
 
-import ShopGrid from "@/components/ShopGrid";
-import CollectionGrid from '@/components/CollectionGrid';
-import CollectionScroller from "@/components/CollectionScroller";
+import ShopGrid from '@/components/shop/ShopGrid';
+import CollectionGrid from '@/components/shop/CollectionGrid';
+import CollectionScroller from '@/components/CollectionScroller';
 
 export default function Shop() {
     const [selectedCollection, setSelectedCollection] = useState(null);

@@ -1,17 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, Menu, User, X } from "lucide-react";
 
 import { NavLink } from "./NavLink";
 import { useMenu } from "@/hooks/useMenu";
 import { CartIcon } from "./cart/CartIcon";
+import { usePathname } from "next/navigation";
 import { ContentSwitcher } from "./ContentSwitcher";
 import { WishlistIcon } from "./wishlist/WishlistIcon";
 
 export default function NavMobile() {
+    const { menuData } = useMenu();
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [content, setContent] = useState("links-main");
     const [currentSubmenu, setCurrentSubmenu] = useState(null);
-    const { menuData } = useMenu();
+
+    useEffect(() => {
+        setIsOpen(false);
+        setContent("links-main");
+        setCurrentSubmenu(null);
+    }, [pathname]);
 
     const toggleMenu = () => setIsOpen(!isOpen);
 

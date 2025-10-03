@@ -28,7 +28,7 @@ export const CartContent = memo(function CartContent({ showTitle = false, classN
                 </div>
             )}
             
-            <div className="flex-1 overflow-y-auto py-2">
+            <div className="p-2 flex-1 overflow-y-auto divide-y divide-dark/10">
                 {cart.map((cartItem, index) => (
                     <CartItem 
                         key={`${cartItem.itemId}-${cartItem.size}-${index}`} 
@@ -39,7 +39,7 @@ export const CartContent = memo(function CartContent({ showTitle = false, classN
                 ))}
             </div>
             
-            <div className="pt-4 space-y-4">
+            <div className="mt-2 pt-4 space-y-4 border-t-1 border-dark">
                 <p className="text-center">
                     Total: <span className="font-semibold">${cartTotal.toFixed(2)}</span>
                 </p>

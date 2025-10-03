@@ -20,7 +20,7 @@ export function useAddressValidation(address) {
 				} else {
 					isValidZip = true;
 				}
-			} catch (error) {
+			} catch (error) { 
 				console.log("Postcode validation error:", error);
 				isValidZip = false;
 			}
