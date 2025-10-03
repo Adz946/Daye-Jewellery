@@ -3,14 +3,17 @@ import { usePathname } from "next/navigation";
 import { Search, Menu, X } from "lucide-react";
 
 import { NavLink } from "./NavLink";
-import { CartIcon } from "./cart/CartIcon";
-import { WishlistIcon } from "./wishlist/WishlistIcon";
-import { useFilters } from "@/contexts/FilterContext";
-import { ContentSwitcher } from "./ContentSwitcher";
 import { useMenu } from "@/hooks/useMenu";
+import { CartIcon } from "./cart/CartIcon";
+import { ContentSwitcher } from "./ContentSwitcher";
+import { useDropdowns } from "@/contexts/UIProvider";
+import { useFilters } from "@/contexts/FilterContext";
+import { WishlistIcon } from "./wishlist/WishlistIcon";
 
 export default function NavTablet() {
     const pathname = usePathname();
+    const { closeAllDropdowns } = useDropdowns();
+
     const { menuData } = useMenu();
     const { navigateWithFilters } = useFilters();
     
@@ -24,6 +27,7 @@ export default function NavTablet() {
         setIsMenuOpen(false);
         setContent("links-main");
         setCurrentSubmenu(null);
+        closeAllDropdowns();
     }, [pathname]);
 
     const handleSearchSubmit = async (e) => {
