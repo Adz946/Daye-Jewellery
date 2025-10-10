@@ -1,10 +1,10 @@
-export default function AddressField({ label, name, type = "text", value, onChange, onBlur, error, required = false, 
-	disabled = false, placeholder = "", options = [] 
+export default function InputField({ label, name, type = "text", value, onChange, onBlur, error, required = false, 
+	disabled = false, placeholder = "", options = [], classes = ""
 }) {
-	const fieldClasses = `w-full border rounded px-3 py-2 ${error ? "border-red-500" : ""}`;
+	const fieldClasses = `w-full border rounded p-2 ${error ? "border-2 border-red" : ""}`;
 
 	return (
-		<div>
+		<div className={classes}>
 			<label className="block text-sm font-medium mb-1">{label}</label>
 
 			{type === "select" ? (
