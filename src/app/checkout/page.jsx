@@ -7,6 +7,10 @@ import { useCart } from "@/contexts/AppProvider";
 import { useToasts } from "@/contexts/UIProvider";
 import ReviewItem from "@/components/checkout/ReviewItem";
 import MultiSelect from "@/components/checkout/MultiSelect";
+
+import CustomerView from "@/components/checkout/CustomerView";
+import ShippingView from "@/components/checkout/ShippingView";
+import CustomerDetails from "@/components/checkout/CustomerDetails";
 import ShippingDetails from "@/components/checkout/ShippingDetails";
 
 export default function Checkout() {
@@ -18,20 +22,53 @@ export default function Checkout() {
     const { cart, cartTotal } = useCart();
     const [notes, setNotes] = useState([]);
 
-    const [shipping, setShipping] = useState({
-        fullName: "", street: "", city: "",
-        country: "", state: "", zip: ""
-    });
+    const [customer, setCustomer] = useState({ firstName: "", lastName: "", email: "", phone: "" });
+    const [shipping, setShipping] = useState({ street: "", city: "", country: "", state: "", zip: "" });
 
-    const updateShippingDetails = (name, value) => {
+    const [customerValidated, setCustomerValidated] = useState(false);
+    const [shippingValidated, setShippingValidated] = useState(false);
+
+    const updateCustomerDetail = (name, value) => {
+        let updated = { ...customer, [name]: value };
+        setCustomer(updated);
+    }
+
+    const bulkUpdateCustomer = (updates) => {
+        setCustomer(prev => ({ ...prev, ...updates }));
+    }
+
+    const updateShippingDetail = (name, value) => {
         let updated = { ...shipping, [name]: value };
 		if (name === "country") updated.state = "";
         setShipping(updated);
     }
 
+    const bulkUpdateShipping = (updates) => {
+        setShipping(prev => ({ ...prev, ...updates }));
+    }
+
+    const handleEditCustomer = () => {
+        setCustomerValidated(false);
+        addToast({ message: "Customer details unlocked for editing", type: 'info' });
+    };
+
+    const handleEditShipping = () => {
+        setShippingValidated(false);
+        addToast({ message: "Shipping address unlocked for editing", type: 'info' });
+    };
+
     function handleProceed() {
-        const total = cartTotal.toFixed(2);
-        addToast({ message: `Order ready! Total: $${total}`, type: 'success' });
+        if (!customerValidated || !shippingValidated) {
+            addToast({ message: 'Please complete and confirm all details', type: 'error' });
+            return;
+        }
+
+        // Save data to sessionStorage for payment page
+        sessionStorage.setItem('checkout_customer', JSON.stringify(customer));
+        sessionStorage.setItem('checkout_shipping', JSON.stringify(shipping));
+        
+        // Navigate to payment
+        router.push('/payment');
     }
 
     return (
@@ -56,8 +93,21 @@ export default function Checkout() {
                 <span className="w-2/3 py-2 text-dark border-2 border-dark rounded-r-lg">${cartTotal.toFixed(2)}</span>
             </section>
 
+            {/* Customer Details */}
+            {customerValidated ? (
+                <CustomerView customer={customer} onEdit={handleEditCustomer} />
+            ) : (
+                <CustomerDetails customer={customer} onChange={updateCustomerDetail} onValidation={setCustomerValidated}
+                    onBulkUpdate={bulkUpdateCustomer} />
+            )}
+
             {/* Shipping Details */}
-            <ShippingDetails shipping={shipping} onChange={updateShippingDetails} />
+            {shippingValidated ? (
+                <ShippingView shipping={shipping} onEdit={handleEditShipping} />
+            ) : (
+                <ShippingDetails shipping={shipping} onChange={updateShippingDetail} onValidation={setShippingValidated}
+                    onBulkUpdate={(bulkUpdateShipping)} />
+            )}
             
             {/* Order Notes */}
             <MultiSelect title="Order Notes (optional)" storage={notes} onUpdate={setNotes} className="rounded-lg shadow">
@@ -71,7 +121,7 @@ export default function Checkout() {
             {/* Process */}
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <Button text="Continue Shopping" onClick={toShopNow} />
-                <Button text="Proceed to Payment" disabled={cart.length === 0} onClick={handleProceed} />
+                <Button text="Proceed to Payment" disabled={!customerValidated || !shippingValidated} onClick={handleProceed} />
             </section>
         </section>
     );

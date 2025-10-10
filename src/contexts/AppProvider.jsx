@@ -37,6 +37,9 @@ const cartConfig = {
                 if (!existingItem) return; 
                 remove({ itemId, size });
                 if (quantity > 0) { add({ ...existingItem, quantity }); }
+            },
+            clearCart: (items, { clear }) => () => {
+                clear();
             }
         }
     }
