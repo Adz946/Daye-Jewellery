@@ -1,7 +1,8 @@
 import sqlite3 from 'sqlite3';
 import path from 'path';
 
-const DB_PATH = path.join(process.cwd(), 'src/data/jewellery.db');
+const DB_PATH = process.env.NODE_ENV === 'production' 
+    ? ':memory:' : path.join(process.cwd(), 'src/data/jewellery.db'); 
 
 /**
  * Execute a SELECT query that returns multiple rows

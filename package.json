@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "NODE_ENV=development next dev",
+    "build": "NODE_ENV=production next build"
   },
   "dependencies": {
     "@szhsin/react-accordion": "^1.4.1",
