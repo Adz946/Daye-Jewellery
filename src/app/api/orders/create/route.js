@@ -1,7 +1,10 @@
+import { cachedFetch } from '@/utils/RequestCache';
 import { runTransaction } from '@/utils/Database';
 import { v4 as uuid } from 'uuid';
 
 export async function POST(request) {
+    const baseUrl = `${request.headers.get('x-forwarded-proto') || 'http'}://${request.headers.get('host')}`;
+
     try {
         const { customer, shipping, items, totalAmount, paymentMethod, notes } = await request.json();
 
@@ -70,19 +73,18 @@ export async function POST(request) {
 
         // Update stock levels
         console.log("[3] Updating Stock...");
-        const stockResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/inventory/stock/bulk`, {
+        const stockResult = await cachedFetch(`${baseUrl}/api/inventory/stock/bulk`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ operations: stockUpdates })
         });
 
         let stockUpdated = false;
-        if (stockResponse.ok) {
-            const stockResult = await stockResponse.json();
+        if (stockResult.success) {
             stockUpdated = stockResult.success;
             console.log('Stock update result: ', stockResult);
         } else {
-            console.error('Stock update failed: ', stockResponse.status);
+            console.error('Stock update failed: ', stockResult);
         }
 
         return Response.json({

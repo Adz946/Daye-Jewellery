@@ -14,7 +14,7 @@ export default function ReviewItem({ item }) {
     const itemTotal = (item.price * item.quantity).toFixed(2);
 
     return (
-        <div className="p-4 gap-4 flex items-center">
+        <div className="p-4 gap-4 flex flex-col items-center md:flex-row">
             <div className="relative w-24 aspect-square">
                 <Image fill src={`/${getImg(item.type)}_PLACEHOLDER.png`} alt={item.desc} className="object-contain rounded-lg" />
             </div>
