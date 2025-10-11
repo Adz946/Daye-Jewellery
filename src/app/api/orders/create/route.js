@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 export async function POST(request) {
     const baseUrl = `${request.headers.get('x-forwarded-proto') || 'http'}://${request.headers.get('host')}`;
+    console.log("-- Base URL: ", baseUrl);
 
     try {
         const { customer, shipping, items, totalAmount, paymentMethod, notes } = await request.json();
